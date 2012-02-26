@@ -59,7 +59,7 @@ class MyDocument {
 
 MyDocument now takes an instance of Isolator in it's constructor. It would a pain and unnecessary
 to specify the Isolator instance every time you construct an object in your production code, so a
-shared instance is made accessible using Isolator::get() method. If a non-NULL value is passed to
+shared instance is made accessible using the Isolator::get() method. If a non-NULL value is passed to
 Isolator::get() it is returned unchanged, allowing you to replace the Isolator when necessary.
 
 Now that an Isolator instance is available, MyDocument::getContents() is updated to use the isolator
