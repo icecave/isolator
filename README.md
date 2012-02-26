@@ -7,7 +7,7 @@ Testing classes that use these functions quickly becomes difficult due to the in
 
 **Isolator** endeavours to solve this problem by acting as a proxy between your class and global functions.
 An isolator instance is passed into your object as [dependency](http://en.wikipedia.org/wiki/Dependency_injection) and
-used in place of any global function calls that you may want to replace at test-time.
+used in place of any global function calls that you may want to replace when testing.
 
 ## Example
 
@@ -30,11 +30,11 @@ class MyDocument {
 }
 ```
 
-Despite the simplicity of the example the class immediately becomes difficult to test due to it's reliance on the file system.
+Despite the simplicity of the example the class immediately becomes difficult to test due to it's reliance on the filesystem.
 In order to test this class you might be inclined to set up some static fixtures on disk, make a temporary directory when your test suite
 is set up or perhaps even use a [virtual filesystem wrapper](http://code.google.com/p/bovigo/wiki/vfsStream).
 
-**Isolator** provides a fourth alternative, given below is the same example rewritten using an Isolator instance.
+**Isolator** provides a fourth alternative. Given below is the same example rewritten using an Isolator instance.
 
 ```php
 <?php
@@ -59,14 +59,14 @@ class MyDocument {
 
 MyDocument now takes an instance of Isolator in it's constructor. It would a pain and unnecessary
 to specify the Isolator instance every time you construct an object in your production code, so a
-shared instance is accessible using Isolator::get() method. If a non-null value is passed to
-Isolator::get() it is returned unchanged.
+shared instance is made accessible using Isolator::get() method. If a non-NULL value is passed to
+Isolator::get() it is returned unchanged, allowing you to replace the Isolator when necessary.
 
-Now that an Isolator instance is available, the getContents() method is updated to use the isolator
-rather than calling the global function directly. The behavior of the MyDocument class remains unchanged
-but testing the class is easy, as will be shown in the example test suite below.
+Now that an Isolator instance is available, MyDocument::getContents() is updated to use the isolator
+rather than calling the global function directly. The behavior of MyDocument remains unchanged but testing
+the class is easy, as will be shown in the example test suite below.
 
-*The test below is written for the [PHPUnit](http://www.phpunit.de) testing framework, using [Phake](https://github.com/mlively/Phake) for mocking.
+*Note: The test below is written for the [PHPUnit](http://www.phpunit.de) testing framework, using [Phake](https://github.com/mlively/Phake) for mocking.
 Phake provides more flexible alternative to PHPUnit's built-in mock objects.*
 
 ```php
@@ -78,7 +78,7 @@ class MyDocumentTest extends PHPUnit_Framework_TestCase {
     // First a mocked isolator instance is created ...
     $this->isolator = Phake::mock('IcecaveStudios\Isolator\Isolator');
     
-    // That isolator instance is provided to the MyDocument instance that is to be test ...
+    // That isolator instance is provided to the MyDocument instance that is to be tested ...
     $this->myDocument = new MyDocument('foo.txt', $this->isolator);
   }
   
@@ -106,3 +106,13 @@ The test verifies the behavior of the MyDocument class completely, without requi
 Using an isolator is most helpful when testing code that uses global functions that maintain global state
 or utilize external resources such as databases, filesystems, etc. It is usually unnecessary to mock
 out deterministic functions such as strlen(), for example.
+
+## Peculiarities
+
+Several of PHP's core global functions have some peculiarities and inconsitencies in the way they are defined.
+**Isolator** attempts to circumvent these when possible, but at this point there has not been a great deal of testing
+in this area.
+
+## Author
+
+**Isolator** is written and maintained by [James Harris](http://www.github.com/jmalloc).
