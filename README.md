@@ -62,9 +62,8 @@ to specify the Isolator instance every time you construct an object in your prod
 shared instance is made accessible using the Isolator::get() method. If a non-NULL value is passed to
 Isolator::get() it is returned unchanged, allowing you to replace the Isolator when necessary.
 
-Now that an Isolator instance is available, MyDocument::getContents() is updated to use the isolator
-rather than calling the global function directly. The behavior of MyDocument remains unchanged but testing
-the class is easy, as will be shown in the example test suite below.
+MyDocument::getContents() is also updated to use the isolator instance rather than calling the global function directly.
+The behavior of MyDocument remains unchanged but testing the class is easy, as will be shown in the example test suite below.
 
 *Note: The test below is written for the [PHPUnit](http://www.phpunit.de) testing framework, using [Phake](https://github.com/mlively/Phake) for mocking.
 Phake provides more flexible alternative to PHPUnit's built-in mock objects.*
