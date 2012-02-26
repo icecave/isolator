@@ -28,6 +28,7 @@ class MyDocument {
   protected $filename;
 
 }
+?>
 ```
 
 Despite the simplicity of the example the class immediately becomes difficult to test due to it's reliance on the filesystem.
@@ -55,6 +56,7 @@ class MyDocument {
   protected $isolator;
 
 }
+?>
 ```
 
 MyDocument now takes an instance of Isolator in it's constructor. It would a pain and unnecessary
@@ -66,11 +68,10 @@ MyDocument::getContents() is also updated to use the isolator instance rather th
 The behavior of MyDocument remains unchanged but testing the class is easy, as will be shown in the example test suite below.
 
 *Note: The test below is written for the [PHPUnit](http://www.phpunit.de) testing framework, using [Phake](https://github.com/mlively/Phake) for mocking.
-Phake provides more flexible alternative to PHPUnit's built-in mock objects.*
+Phake provides a more flexible alternative to PHPUnit's built-in mock objects.*
 
 ```php
 <?php
-
 class MyDocumentTest extends PHPUnit_Framework_TestCase {
   
   public function setUp() {
@@ -98,19 +99,20 @@ class MyDocumentTest extends PHPUnit_Framework_TestCase {
   }
   
 }
+?>
 ```
 
 The test verifies the behavior of the MyDocument class completely, without requiring any disk access.
 
-Using an isolator is most helpful when testing code that uses global functions that maintain global state
+Using an isolator is most helpful when testing code that uses global functions which maintain global state
 or utilize external resources such as databases, filesystems, etc. It is usually unnecessary to mock
 out deterministic functions such as strlen(), for example.
 
 ## Peculiarities
 
 Several of PHP's core global functions have some peculiarities and inconsitencies in the way they are defined.
-**Isolator** attempts to circumvent these when possible, but at this point there has not been a great deal of testing
-in this area.
+**Isolator** attempts to accomodate such inconsistencies when possible, but at this point there has not been
+a great deal of testing of this functionality.
 
 ## Author
 
