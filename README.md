@@ -1,17 +1,17 @@
 # Overview
 
-**Isolator** is a very simple shim class that provides an object-based access mechanism to global functions.
-Any method called on an isolator instance is proxied on to the global function of the same name.
+**Isolator** is a small library for easing testing of classes that make use of global functions.
 
-By using this object based approach instead of calling global functions directly global function calls
-can be mocked just like any other method.
+A large number of PHP extensions (and the PHP core) still implement their functionality in global functions.
+Testing classes that use these functions quickly becomes difficult due to the inability to replace them with [test doubles](http://en.wikipedia.org/wiki/Test_double).
 
-The isolator concept came into existence as a method to easy testing
-in large projects that make heavy use of [Dependency Injection](http://en.wikipedia.org/wiki/Dependency_injection).
+**Isolator** endeavours to solve this problem by acting as a proxy between your class and global functions.
+An isolator instance is passed into your object as [dependency](http://en.wikipedia.org/wiki/Dependency_injection) and
+used in place of any global function calls that you may want to replace at test-time.
 
 ## Example
 
-*The following example assumes that you are familiar with principals of Dependency Injection, Unit Testing and Mock Objects.*
+The following class makes use of [file_get_contents()](http://php.net/manual/en/function.file-get-contents.php) to read the contents of a file.
 
 ```php
 <?php
@@ -30,15 +30,11 @@ class MyDocument {
 }
 ```
 
-The example class given performs some very simple filesystem operations, but immediately
-it is a little painful to write a unit test for this class.
+Despite the simplicity of the example the class immediately becomes difficult to test due to it's reliance on the file system.
+In order to test this class you might be inclined to set up some static fixtures on disk, make a temporary directory when your test suite
+is set up or perhaps even use a [virtual filesystem wrapper](http://code.google.com/p/bovigo/wiki/vfsStream).
 
-In order to write a unit test for this class you need to have a file to read.
-An obvious approach might be to bundle some static fixtures on disk, or to make a temporary filesystem
-when the test suite is set up, or even to use a virtual filesystem stream wrapper.
-
-**Isolator** gives you a simple alternative at the cost of a little extra code.
-Below is the class rewritten with **Isolator** support.
+**Isolator** provides a fourth alternative, given below is the same example rewritten using an Isolator instance.
 
 ```php
 <?php
@@ -61,15 +57,17 @@ class MyDocument {
 }
 ```
 
-The first thing to note is that the the MyDocument class now accepts an Isolator instance
-as a dependency, with a default of NULL, allowing for the Isolator::get() method to return
-a reference to the global Isolator instance if no isolator is specified. The public interface
-of the class is otherwise unchanged.
+MyDocument now takes an instance of Isolator in it's constructor. It would a pain and unnecessary
+to specify the Isolator instance every time you construct an object in your production code, so a
+shared instance is accessible using Isolator::get() method. If a non-null value is passed to
+Isolator::get() it is returned unchanged.
 
-Secondly, the call to file_get_contents() is now made via the isolator instance.
-The default behavior of the isolator is to proxy this call directly to the global function of the same name.
+Now that an Isolator instance is available, the getContents() method is updated to use the isolator
+rather than calling the global function directly. The behavior of the MyDocument class remains unchanged
+but testing the class is easy, as will be shown in the example test suite below.
 
-Finally, a simple unit test (written in PHPUnit with Phake) illustrates mocking the isolator methods.
+*The test below is written for the [PHPUnit](http://www.phpunit.de) testing framework, using [Phake](https://github.com/mlively/Phake) for mocking.
+Phake provides more flexible alternative to PHPUnit's built-in mock objects.*
 
 ```php
 <?php
@@ -77,18 +75,25 @@ Finally, a simple unit test (written in PHPUnit with Phake) illustrates mocking 
 class MyDocumentTest extends PHPUnit_Framework_TestCase {
   
   public function setUp() {
+    // First a mocked isolator instance is created ...
     $this->isolator = Phake::mock('IcecaveStudios\Isolator\Isolator');
+    
+    // That isolator instance is provided to the MyDocument instance that is to be test ...
     $this->myDocument = new MyDocument('foo.txt', $this->isolator);
   }
   
   public function testGetContents() {
+    // Phake is used to configure the mocked isolator to return
+    // a known string when file_get_contents() is called with a parameter equal to 'foo.txt' ...
     Phake::when($this->isolator)
       ->file_get_contents('foo.txt')
       ->thenReturn('This is the file contents.');
     
+    // MyDocument::getContents() is called, and it's result checked ...
     $contents = $this->myDocument->getContents();
     $this->assertEquals($contents, 'This is the file contents.');
     
+    // Finally Phake is used to verify that a call to file_get_contents() was made as expected ...
     Phake::verify($this->isolator)
       ->file_get_contents('foo.txt');
   }
@@ -96,9 +101,8 @@ class MyDocumentTest extends PHPUnit_Framework_TestCase {
 }
 ```
 
-MyDocument's behavior is completely covered by the unit test without requiring any actual disk access!
+The test verifies the behavior of the MyDocument class completely, without requiring any disk access.
 
-Using an isolator is most helpful when testing code that uses functions that rely on or manipulate global
-state or an external resource, such as clock based functions, filesystem operations, databases, CURL, etc.
-
-Hopefully it can help you improve the test coverage on your own PHP projects!
+Using an isolator is most helpful when testing code that uses global functions that maintain global state
+or utilize external resources such as databases, filesystems, etc. It is usually unnecessary to mock
+out deterministic functions such as strlen(), for example.
