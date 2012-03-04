@@ -3,50 +3,16 @@ namespace IcecaveStudios\Isolator;
 
 use ReflectionFunction;
 
-/**
- * Isolates calls to global functions to ease mocking / unit testing.
- */
-abstract class Isolator {
+class Isolator {
 
-  /**
-   * Get an isolator instance.
-   *
-   * If an isolator instance is passed it is returned unchanged.
-   * If NULL is passed the isolator is assigned the value of the global Isolator instance.
-   *
-   * @param Isolator|NULL &$isolator The isolator to adapt, or NULL to use the global instance.
-   *
-   * @return Isolator The adapted isolator.
-   */
-  public static function get(Isolator &$isolator = NULL, IsolatorGenerator $generator = NULL) {
-
-    // We already have an isolator ...
-    if ($isolator !== NULL) {
-      return $isolator;
-    }
-
-    // The global isolator has already been initialized ...
-    if (self::$instance !== NULL) {
-      return $isolator = self::$instance;
-    }
-    
-    // Get a list of the global functions ...
-    $functions = get_defined_functions();
-    $functions = array_map(
-      function($name) {
-        return new ReflectionFunction($name);
-      }
-      , $functions['internal']
-    );
-    
-    // Generate a concrete isolator class that handles functions with references ...
-    $generator = $generator ?: new IsolatorGenerator;
-    $reflector = $generator->generate($functions);
-    return $isolator = self::$instance = $reflector->newInstance();
-  }
-  
   /**
    * Forward a call onto global function.
+   *
+   * Support is also provided for the following function-esque language constructs:
+   *
+   *  - exit
+   *  - die
+   *  - echo
    *
    * @param string $name The name of the global function to call.
    * @param array $arguments The arguments to the function.
@@ -55,17 +21,67 @@ abstract class Isolator {
    */
   public function __call($name, array $arguments) {
     if ($name === 'exit' or $name === 'die') {
-      exit($arguments[0]);
+      // @codeCoverageIgnoreStart
+      exit(current($arguments));
+      // @codeCoverageIgnoreEnd
     } else if ($name === 'echo') {
-      echo $arguments[0];
+      echo current($arguments);
+    } else if ($name === 'eval') {
+      return eval(current($arguments));
     } else {
       return call_user_func_array($name, $arguments);
     }
   }
 
   /**
-   * @var Isolator The global isolator instance.
+   * Fetch the default isolator instance, constructing it if necessary.
+   *
+   * @param boolean $handleReferences Indicates whether or not the isolator should account for functions with reference parameters and return types.
+   * @param Generator|NULL $generator The Generator instance to use to construct the concreate isolator class, or NULL to use the default.
+   * @param Isolator|NULL $isolator The isolator used to access the global list of functions, or NULL to use the default.
    */
+  public static function getIsolator($handleReferences = TRUE, Generator $generator = NULL, Isolator $isolator = NULL) {
+
+    // Global instance already initialized ...
+    if (self::$instance !== NULL) {
+      return self::$instance;
+    }
+
+    // No need to handle references, rely on default Isolator::__call() method ...
+    if (!$handleReferences) {
+      return self::$instance = new self;
+    }
+
+    // Construct an isolator generator to create the concreate isolator class ...
+    if ($generator === NULL) {
+      $generator = new Generator;
+    }
+
+    // Get a basic isolator to use for reflection ...
+    if ($isolator === NULL) {
+      $isolator = new self;
+    }
+
+    // Create reflectors for each of the globally defined functions ...
+    $functionReflectors = array();
+    foreach ($isolator->get_defined_functions() as $functions) {
+      foreach ($functions as $name) {
+        $functionReflectors[] = new ReflectionFunction($name);
+      }
+    }
+
+    // Generate the concrete isolator class and install it as the global instance ...
+    $classReflector = $generator->generateClass($functionReflectors);
+    return self::$instance = $classReflector->newInstance();
+  }
+
+  /**
+   * Reset the default isolator instance.
+   */
+  public static function resetIsolator() {
+    self::$instance = NULL;
+  }
+
   private static $instance;
 
 }

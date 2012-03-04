@@ -1,0 +1,15 @@
+<phpunit
+  bootstrap="bootstrap.php"
+  strict="true"
+  convertErrorsToExceptions="true"
+  convertWarningsToExceptions="true"
+  convertNoticesToExceptions="true"
+  mapTestClassNameToCoveredClassName="true"
+  colors="true"
+>
+  <filter>
+    <whitelist>
+      <directory>../deploy/lib</directory>
+    </whitelist>
+  </filter>
+</phpunit>
