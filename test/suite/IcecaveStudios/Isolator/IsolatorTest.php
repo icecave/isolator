@@ -7,17 +7,17 @@ use PHPUnit_Framework_TestCase;
 use Phake;
 
 class IsolatorTest extends PHPUnit_Framework_TestCase {
-  
+
   public function tearDown() {
     parent::tearDown();
     Isolator::resetIsolator();
   }
-  
+
   public function testCall() {
     $isolator = new Isolator;
     $this->assertSame(3, $isolator->strlen('foo'));
   }
-  
+
   public function testEcho() {
     $isolator = new Isolator;
     $this->expectOutputString('Echo works!');
@@ -28,13 +28,19 @@ class IsolatorTest extends PHPUnit_Framework_TestCase {
     $isolator = new Isolator;
     $this->assertSame(3, $isolator->eval('return strlen("foo");'));
   }
-  
+
+  public function testGet() {
+    $isolator = new Isolator;
+    $this->assertSame($isolator, Isolator::get($isolator));
+    $this->assertInstanceOf('IcecaveStudios\Isolator\Isolator', Isolator::get(NULL));
+  }
+
   public function testGetIsolator() {
     $isolator = Isolator::getIsolator();
     $this->assertInstanceOf('IcecaveStudios\Isolator\Isolator', $isolator);
     $this->assertSame($isolator, Isolator::getIsolator());
   }
-  
+
   public function testGetIsolatorNoReferences() {
     $isolator = Isolator::getIsolator(FALSE);
     $this->assertSame('IcecaveStudios\Isolator\Isolator', get_class($isolator));
@@ -45,7 +51,7 @@ class IsolatorTest extends PHPUnit_Framework_TestCase {
     $this->assertInstanceOf('IcecaveStudios\Isolator\Isolator', $isolator);
     $this->assertSame($isolator, Isolator::getIsolator(FALSE));
   }
-  
+
   public function testGetIsolatorNewInstance() {
     $generator = Phake::mock('IcecaveStudios\Isolator\Generator');
     Phake::when($generator)
