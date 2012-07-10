@@ -34,6 +34,23 @@ class Isolator {
   }
 
   /**
+   * Fetch a usable isolator instance, or return an existing one.
+   *
+   * If no instance is provided, a new instance will be created and returned.
+   *
+   * @param Isolator|NULL $instance An existing isolator instance, if available.
+   *
+   * @return Isolator A new isolator instance, or the provided instance if available.
+   */
+  public static function get(Isolator $instance = NULL) {
+    if ($instance) {
+      return $instance;
+    }
+
+    return static::getIsolator();
+  }
+
+  /**
    * Fetch the default isolator instance, constructing it if necessary.
    *
    * @param boolean $handleReferences Indicates whether or not the isolator should account for functions with reference parameters and return types.
