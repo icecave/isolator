@@ -1,9 +1,14 @@
 {
-    "hash": "02f600da7089fbdd42d643772ea2f5c0",
+    "hash": "d5c694610bcc25d5ed8994121e937a41",
     "packages": [
 
     ],
-    "packages-dev": null,
+    "packages-dev": [
+        {
+            "package": "phake/phake",
+            "version": "1.0.2"
+        }
+    ],
     "aliases": [
 
     ],

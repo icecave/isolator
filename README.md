@@ -20,7 +20,7 @@ class MyDocument {
   public function __construct($filename) {
     $this->filename = $filename;
   }
-  
+
   public function getContents() {
     return file_get_contents($this->filename);
   }
@@ -47,7 +47,7 @@ class MyDocument {
     $this->filename = $filename;
     $this->isolator = Isolator::get($isolator);
   }
-  
+
   public function getContents() {
     return $this->isolator->file_get_contents($this->filename);
   }
@@ -73,31 +73,31 @@ Phake provides a more flexible alternative to PHPUnit's built-in mock objects.*
 ```php
 <?php
 class MyDocumentTest extends PHPUnit_Framework_TestCase {
-  
+
   public function setUp() {
     // First a mocked isolator instance is created ...
     $this->isolator = Phake::mock('IcecaveStudios\Isolator\Isolator');
-    
+
     // That isolator instance is provided to the MyDocument instance that is to be tested ...
     $this->myDocument = new MyDocument('foo.txt', $this->isolator);
   }
-  
+
   public function testGetContents() {
     // Phake is used to configure the mocked isolator to return
     // a known string when file_get_contents() is called with a parameter equal to 'foo.txt' ...
     Phake::when($this->isolator)
       ->file_get_contents('foo.txt')
       ->thenReturn('This is the file contents.');
-    
+
     // MyDocument::getContents() is called, and it's result checked ...
     $contents = $this->myDocument->getContents();
     $this->assertEquals($contents, 'This is the file contents.');
-    
+
     // Finally Phake is used to verify that a call to file_get_contents() was made as expected ...
     Phake::verify($this->isolator)
       ->file_get_contents('foo.txt');
   }
-  
+
 }
 ?>
 ```
