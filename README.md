@@ -1,5 +1,7 @@
 # Overview
 
+[![Build Status](https://secure.travis-ci.org/IcecaveStudios/isolator.png)](http://travis-ci.org/IcecaveStudios/isolator)
+
 **Isolator** is a small library for easing testing of classes that make use of global functions.
 
 A large number of PHP extensions (and the PHP core) still implement their functionality in global functions.
