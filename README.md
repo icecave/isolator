@@ -41,7 +41,7 @@ is set up or perhaps even use a [virtual filesystem wrapper](http://code.google.
 
 ```php
 <?php
-use IcecaveStudios\Isolator\Isolator;
+use Icecave\Isolator\Isolator;
 
 class MyDocument {
 
@@ -78,7 +78,7 @@ class MyDocumentTest extends PHPUnit_Framework_TestCase {
 
   public function setUp() {
     // First a mocked isolator instance is created ...
-    $this->isolator = Phake::mock('IcecaveStudios\Isolator\Isolator');
+    $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
 
     // That isolator instance is provided to the MyDocument instance that is to be tested ...
     $this->myDocument = new MyDocument('foo.txt', $this->isolator);

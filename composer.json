@@ -1,5 +1,5 @@
 {
-    "name": "IcecaveStudios/isolator",
+    "name": "icecave/isolator",
     "type": "library",
     "description": "Mock out calls to built-in PHP functions.",
     "keywords": ["test", "phpunit", "phake", "unit", "mock", "fake"],
@@ -19,26 +19,7 @@
     },
     "autoload": {
         "psr-0": {
-            "IcecaveStudios": "lib"
+            "Icecave\\Isolator": "lib"
         }
-    },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "phake/phake",
-                "version": "1.0.2",
-                "dist": {
-                    "url": "https://github.com/mlively/Phake/zipball/v1.0.2",
-                    "type": "zip"
-                },
-                "autoload": {
-                    "classmap": ["src"]
-                },
-                "include-path": [
-                    "src"
-                ]
-            }
-        }
-    ]
+    }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace IcecaveStudios\Isolator;
+namespace Icecave\Isolator;
 
 use ReflectionClass;
 use ReflectionFunction;
@@ -34,7 +34,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     try {
       $this->_generator->generateClass($reflectors, 'TestIsolatorClass');
     } catch (ReflectionException $e) {
-      $expectedCode  = 'namespace IcecaveStudios\Isolator {' . PHP_EOL;
+      $expectedCode  = 'namespace Icecave\Isolator {' . PHP_EOL;
       $expectedCode .= 'class TestIsolatorClass extends Isolator {' . PHP_EOL;
       $expectedCode .= PHP_EOL;
       $expectedCode .= '/* method goes here */' . PHP_EOL;
