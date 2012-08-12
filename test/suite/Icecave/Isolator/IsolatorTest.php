@@ -33,6 +33,42 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
         $this->assertSame(3, $isolator->eval('return strlen("foo");'));
     }
 
+    public function testInclude()
+    {
+        $isolator = new Isolator;
+        $this->assertFalse(class_exists(__NAMESPACE__.'\TestFixture\ClassA', FALSE));
+
+        $isolator->include(__DIR__.'/../../../lib/Icecave/Isolator/TestFixture/ClassA.php');
+        $this->assertTrue(class_exists(__NAMESPACE__.'\TestFixture\ClassA', FALSE));
+    }
+
+    public function testIncludeOnce()
+    {
+        $isolator = new Isolator;
+        $this->assertFalse(class_exists(__NAMESPACE__.'\TestFixture\ClassB', FALSE));
+
+        $isolator->include_once(__DIR__.'/../../../lib/Icecave/Isolator/TestFixture/ClassB.php');
+        $this->assertTrue(class_exists(__NAMESPACE__.'\TestFixture\ClassB', FALSE));
+    }
+
+    public function testRequire()
+    {
+        $isolator = new Isolator;
+        $this->assertFalse(class_exists(__NAMESPACE__.'\TestFixture\ClassC', FALSE));
+
+        $isolator->require(__DIR__.'/../../../lib/Icecave/Isolator/TestFixture/ClassC.php');
+        $this->assertTrue(class_exists(__NAMESPACE__.'\TestFixture\ClassC', FALSE));
+    }
+
+    public function testRequireOnce()
+    {
+        $isolator = new Isolator;
+        $this->assertFalse(class_exists(__NAMESPACE__.'\TestFixture\ClassD', FALSE));
+
+        $isolator->require_once(__DIR__.'/../../../lib/Icecave/Isolator/TestFixture/ClassD.php');
+        $this->assertTrue(class_exists(__NAMESPACE__.'\TestFixture\ClassD', FALSE));
+    }
+
     public function testGet()
     {
         $isolator = new Isolator;
