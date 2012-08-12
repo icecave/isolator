@@ -13,6 +13,10 @@ class Isolator
      *    - exit
      *    - die
      *    - echo
+     *    - include
+     *    - include_once
+     *    - require
+     *    - require_once
      *
      * @param string $name The name of the global function to call.
      * @param array $arguments The arguments to the function.
@@ -21,17 +25,34 @@ class Isolator
      */
     public function __call($name, array $arguments)
     {
-        if ($name === 'exit' or $name === 'die') {
-            // @codeCoverageIgnoreStart
-            exit(current($arguments));
-            // @codeCoverageIgnoreEnd
-        } else if ($name === 'echo') {
-            echo current($arguments);
-        } else if ($name === 'eval') {
-            return eval(current($arguments));
-        } else {
-            return call_user_func_array($name, $arguments);
+        switch ($name) {
+            case 'exit':
+            case 'die':
+                // @codeCoverageIgnoreStart
+                exit(current($arguments));
+                // @codeCoverageIgnoreEnd
+            case 'echo':
+                echo current($arguments);
+                return;
+            case 'eval':
+                return eval(current($arguments));
+            case 'include':
+                include current($arguments);
+                return;
+            case 'include_once':
+                include_once current($arguments);
+                return;
+            case 'require':
+                require current($arguments);
+                return;
+            case 'require_once':
+                require_once current($arguments);
+                return;
+            default:
+
         }
+
+        return call_user_func_array($name, $arguments);
     }
 
     /**
