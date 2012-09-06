@@ -1,4 +1,4 @@
-# Overview
+# Isolator
 
 [![Build Status](https://secure.travis-ci.org/IcecaveStudios/isolator.png)](http://travis-ci.org/IcecaveStudios/isolator)
 
