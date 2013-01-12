@@ -39,7 +39,8 @@ class MyDocument
         $this->filename = $filename;
     }
 
-    public function getContents() {
+    public function getContents()
+    {
         return file_get_contents($this->filename);
     }
 
@@ -59,12 +60,14 @@ use Icecave\Isolator\Isolator;
 
 class MyDocument
 {
-    public function __construct($filename, Isolator $isolator = NULL) {
+    public function __construct($filename, Isolator $isolator = NULL)
+    {
         $this->filename = $filename;
         $this->isolator = Isolator::get($isolator);
     }
 
-    public function getContents() {
+    public function getContents()
+    {
         return $this->isolator->file_get_contents($this->filename);
     }
 

@@ -18,8 +18,8 @@ class Isolator
      *    - require
      *    - require_once
      *
-     * @param string $name The name of the global function to call.
-     * @param array $arguments The arguments to the function.
+     * @param string $name      The name of the global function to call.
+     * @param array  $arguments The arguments to the function.
      *
      * @return mixed The result of the function call.
      */
@@ -33,20 +33,25 @@ class Isolator
                 // @codeCoverageIgnoreEnd
             case 'echo':
                 echo current($arguments);
+
                 return;
             case 'eval':
                 return eval(current($arguments));
             case 'include':
                 include current($arguments);
+
                 return;
             case 'include_once':
                 include_once current($arguments);
+
                 return;
             case 'require':
                 require current($arguments);
+
                 return;
             case 'require_once':
                 require_once current($arguments);
+
                 return;
             default:
 
@@ -76,9 +81,9 @@ class Isolator
     /**
      * Fetch the default isolator instance, constructing it if necessary.
      *
-     * @param boolean $handleReferences Indicates whether or not the isolator should account for functions with reference parameters and return types.
-     * @param Generator|NULL $generator The Generator instance to use to construct the concreate isolator class, or NULL to use the default.
-     * @param Isolator|NULL $isolator The isolator used to access the global list of functions, or NULL to use the default.
+     * @param boolean        $handleReferences Indicates whether or not the isolator should account for functions with reference parameters and return types.
+     * @param Generator|NULL $generator        The Generator instance to use to construct the concreate isolator class, or NULL to use the default.
+     * @param Isolator|NULL  $isolator         The isolator used to access the global list of functions, or NULL to use the default.
      */
     public static function getIsolator($handleReferences = TRUE, Generator $generator = NULL, Isolator $isolator = NULL)
     {
@@ -112,6 +117,7 @@ class Isolator
 
         // Generate the concrete isolator class and install it as the global instance ...
         $classReflector = $generator->generateClass($functionReflectors);
+
         return self::$instance = $classReflector->newInstance();
     }
 

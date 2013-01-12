@@ -3,7 +3,6 @@ namespace Icecave\Isolator;
 
 use ReflectionClass;
 use ReflectionFunction;
-use ReflectionParameter;
 
 /**
  * Generates an isolator that can accommodate calls to functions with reference parameters.
@@ -45,7 +44,7 @@ class Generator
     {
         if ($reflector->isDisabled()) {
             return FALSE;
-        } else if ($reflector->returnsReference()) {
+        } elseif ($reflector->returnsReference()) {
             return TRUE;
         }
 
@@ -92,6 +91,7 @@ class Generator
         $code .= $this->generateReturn($name, $maxArity);
         $code .= '} // End function ' . $name . '.' . PHP_EOL;
         $code .= PHP_EOL;
+
         return $code;
     }
 

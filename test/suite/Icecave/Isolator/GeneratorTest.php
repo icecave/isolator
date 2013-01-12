@@ -1,15 +1,14 @@
 <?php
 namespace Icecave\Isolator;
 
-use ReflectionClass;
 use ReflectionFunction;
 use PHPUnit_Framework_TestCase;
 use Phake;
-use stdClass;
 
-class GeneratorTest extends PHPUnit_Framework_TestCase {
-
-  public function setUp() {
+class GeneratorTest extends PHPUnit_Framework_TestCase
+{
+  public function setUp()
+  {
     $this->_isolator = Phake::mock(__NAMESPACE__ . '\Isolator');
     $this->_generator = Phake::partialMock(
       __NAMESPACE__ . '\Generator'
@@ -18,7 +17,8 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testGenerateClass() {
+  public function testGenerateClass()
+  {
     $reflector = Phake::mock('ReflectionFunction');
     $reflectors = array($reflector);
 
@@ -50,7 +50,8 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     }
   }
 
-  public function testInspect() {
+  public function testInspect()
+  {
     $reflector = Phake::mock('ReflectionFunction');
     $parameter1 = Phake::mock('ReflectionParameter');
     $parameter2 = Phake::mock('ReflectionParameter');
@@ -94,7 +95,8 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testInspectEllipsis() {
+  public function testInspectEllipsis()
+  {
     $reflector = Phake::mock('ReflectionFunction');
     $parameter1 = Phake::mock('ReflectionParameter');
     $parameter2 = Phake::mock('ReflectionParameter');
@@ -152,7 +154,8 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testInspectEllipsisOptional() {
+  public function testInspectEllipsisOptional()
+  {
     $reflector = Phake::mock('ReflectionFunction');
     $parameter1 = Phake::mock('ReflectionParameter');
     $parameter2 = Phake::mock('ReflectionParameter');
@@ -210,7 +213,8 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testInspectEllipsisReference() {
+  public function testInspectEllipsisReference()
+  {
     $reflector = Phake::mock('ReflectionFunction');
     $parameter1 = Phake::mock('ReflectionParameter');
     $parameter2 = Phake::mock('ReflectionParameter');
@@ -268,7 +272,8 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testRequiresIsolatorProxyDisabled() {
+  public function testRequiresIsolatorProxyDisabled()
+  {
     $reflector = Phake::mock('ReflectionFunction');
     Phake::when($reflector)
       ->isDisabled()
@@ -279,7 +284,8 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     Phake::verify($reflector)->isDisabled();
   }
 
-  public function testRequiresIsolatorProxyReturnsReference() {
+  public function testRequiresIsolatorProxyReturnsReference()
+  {
     $reflector = Phake::mock('ReflectionFunction');
     Phake::when($reflector)
       ->isDisabled()
@@ -297,7 +303,8 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testRequiresIsolatorProxyReferenceParameter() {
+  public function testRequiresIsolatorProxyReferenceParameter()
+  {
     $reflector = Phake::mock('ReflectionFunction');
     $parameter1 = Phake::mock('ReflectionParameter');
     $parameter2 = Phake::mock('ReflectionParameter');
@@ -333,7 +340,8 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     );
   }
 
-  public function testRequiresIsolatorProxyNoReferenceParameters() {
+  public function testRequiresIsolatorProxyNoReferenceParameters()
+  {
     $reflector = Phake::mock('ReflectionFunction');
     $parameter1 = Phake::mock('ReflectionParameter');
     $parameter2 = Phake::mock('ReflectionParameter');
