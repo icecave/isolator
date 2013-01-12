@@ -63,7 +63,7 @@ class Generator
         $minArity = 0;
         $maxArity = 0;
         $refIndices = array();
-        
+
         foreach ($reflector->getParameters() as $parameter) {
             $refIndices[$maxArity++] = $parameter->isPassedByReference();
 
@@ -138,7 +138,7 @@ class Generator
 
         return $code;
     }
-    
+
     protected function generateReturn($name, $arity)
     {
         $arguments = array();

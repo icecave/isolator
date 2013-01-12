@@ -21,7 +21,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
   public function testGenerateClass() {
     $reflector = Phake::mock('ReflectionFunction');
     $reflectors = array($reflector);
-    
+
     Phake::when($this->_generator)
       ->requiresIsolatorProxy(Phake::anyParameters())
       ->thenReturn(TRUE);
@@ -82,7 +82,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     );
 
     $this->assertSame($expected, $this->_generator->inspect($reflector));
-    
+
     Phake::inOrder(
       Phake::verify($reflector)->getParameters()
       , Phake::verify($parameter1)->isPassedByReference()
@@ -137,7 +137,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     );
 
     $this->assertSame($expected, $this->_generator->inspect($reflector));
-    
+
     $parameter2Verifier = Phake::verify($parameter2, Phake::times(2));
 
     Phake::inOrder(
@@ -195,7 +195,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     );
 
     $this->assertSame($expected, $this->_generator->inspect($reflector));
-    
+
     $parameter2Verifier = Phake::verify($parameter2, Phake::times(2));
 
     Phake::inOrder(
@@ -253,7 +253,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     );
 
     $this->assertSame($expected, $this->_generator->inspect($reflector));
-    
+
     $parameter2Verifier = Phake::verify($parameter2, Phake::times(2));
 
     Phake::inOrder(
@@ -288,7 +288,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     Phake::when($reflector)
       ->returnsReference()
       ->thenReturn(TRUE);
-      
+
     $this->assertTrue($this->_generator->requiresIsolatorProxy($reflector));
 
     Phake::inOrder(
@@ -301,7 +301,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     $reflector = Phake::mock('ReflectionFunction');
     $parameter1 = Phake::mock('ReflectionParameter');
     $parameter2 = Phake::mock('ReflectionParameter');
-    
+
     Phake::when($reflector)
       ->isDisabled()
       ->thenReturn(FALSE);
@@ -321,7 +321,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     Phake::when($parameter2)
       ->isPassedByReference()
       ->thenReturn(TRUE);
-    
+
     $this->assertTrue($this->_generator->requiresIsolatorProxy($reflector));
 
     Phake::inOrder(
@@ -337,7 +337,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     $reflector = Phake::mock('ReflectionFunction');
     $parameter1 = Phake::mock('ReflectionParameter');
     $parameter2 = Phake::mock('ReflectionParameter');
-    
+
     Phake::when($reflector)
       ->isDisabled()
       ->thenReturn(FALSE);
@@ -357,7 +357,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase {
     Phake::when($parameter2)
       ->isPassedByReference()
       ->thenReturn(FALSE);
-    
+
     $this->assertFalse($this->_generator->requiresIsolatorProxy($reflector));
 
     Phake::inOrder(
