@@ -1,9 +1,58 @@
 {
-    "hash": "090aca3afd5a6381b71ca3e675f16520",
+    "hash": "5dade6ae58050e6e1caa24a59b8faa70",
     "packages": [
 
     ],
     "packages-dev": [
+        {
+            "name": "icecave/testing",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/IcecaveStudios/testing.git",
+                "reference": "1.0.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/IcecaveStudios/testing/archive/1.0.4.zip",
+                "reference": "1.0.4",
+                "shasum": ""
+            },
+            "require": {
+                "phake/phake": "1.*"
+            },
+            "suggest": {
+                "eloquent/asplode": "Use the asplode error handler instead of PHPUnit's internal error handler.",
+                "eloquent/liberator": "Use liberator for circumventing PHP access modifier restrictions inside tests."
+            },
+            "time": "2013-01-14 04:12:59",
+            "bin": [
+                "bin/phpunit",
+                "bin/phpunit-coverage",
+                "bin/update-dotfiles"
+            ],
+            "type": "library",
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Harris",
+                    "email": "james.harris@icecave.com.au"
+                }
+            ],
+            "description": "Helper package for testing Icecave projects in a uniform way.",
+            "homepage": "https://github.com/IcecaveStudios/testing",
+            "keywords": [
+                "testing",
+                "phpunit",
+                "test",
+                "unit",
+                "phake",
+                "coverage"
+            ]
+        },
         {
             "name": "phake/phake",
             "version": "v1.0.3",
@@ -21,14 +70,14 @@
             "require": {
                 "php": ">=5.2.0"
             },
-            "time": "2012-05-14 15:06:51",
+            "time": "2012-05-14 08:06:51",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     "src"
                 ]
             },
+            "notification-url": "http://packagist.org/downloads/",
             "include-path": [
                 "src"
             ],
@@ -38,9 +87,7 @@
             "authors": [
                 {
                     "name": "Mike Lively",
-                    "email": "m@digitalsandwich.com",
-                    "homepage": null,
-                    "role": null
+                    "email": "m@digitalsandwich.com"
                 }
             ],
             "description": "The Phake mock testing library",
