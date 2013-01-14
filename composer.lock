@@ -6,16 +6,16 @@
     "packages-dev": [
         {
             "name": "icecave/testing",
-            "version": "1.0.4",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/IcecaveStudios/testing.git",
-                "reference": "1.0.4"
+                "reference": "1.0.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/IcecaveStudios/testing/archive/1.0.4.zip",
-                "reference": "1.0.4",
+                "url": "https://github.com/IcecaveStudios/testing/archive/1.0.6.zip",
+                "reference": "1.0.6",
                 "shasum": ""
             },
             "require": {
@@ -25,7 +25,7 @@
                 "eloquent/asplode": "Use the asplode error handler instead of PHPUnit's internal error handler.",
                 "eloquent/liberator": "Use liberator for circumventing PHP access modifier restrictions inside tests."
             },
-            "time": "2013-01-14 04:12:59",
+            "time": "2013-01-14 05:53:31",
             "bin": [
                 "bin/phpunit",
                 "bin/phpunit-coverage",
