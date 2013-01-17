@@ -1,6 +1,7 @@
 # Isolator
 
 [![Build Status](https://secure.travis-ci.org/IcecaveStudios/isolator.png)](http://travis-ci.org/IcecaveStudios/isolator)
+[![Test Coverage](http://icecavestudios.github.com/isolator/coverage-report/coverage.png)](http://icecavestudios.github.com/isolator/coverage-report/index.html)
 
 **Isolator** is a small library for easing testing of classes that make use of global functions.
 
