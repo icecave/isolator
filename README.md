@@ -14,7 +14,7 @@ used in place of any global function calls that you may want to replace when tes
 
 ## Installation
 
-**Isolator** requires PHP 5.3.
+**Isolator** requires PHP 5.3.3 or newer.
 
 ### With [Composer](http://getcomposer.org/)
 

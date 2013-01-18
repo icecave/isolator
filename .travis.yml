@@ -11,11 +11,11 @@ matrix:
   include:
     - php: 5.4
       env:
-        - secure: "CRpBwQGMzepmovNE+6kdbaLS6LgglqqSV2oaXFUnNfWNfX054NEsPFwrB/DZ\neKZCs/ZMy75KoDYiCrQUGUeu1R5m2PoQVo0OeZZz0V2U9wI5+LsYTZGUaX44\n8a1ZoDTgwZzpW8jXYh/TWnIN9c54ma68NEXnoOJK50IjFNFJvBo="
+        - secure: "JqwOvga8I+3P8g2ACTSSrDH7FMGM8ul6e3DsF3ltH5A6nE+me+bV8CJtsIYE\nwtjp2e1D0IJoNezoxjYhQWJkUk7sH6uTV/FK4b3s9gu4lXVR/h7LVbVldBhe\nMVrXuzHaPnyOD+2wSS2SNPQ8Ek7YMOyU9jfxhUyPVxF1E4hguTo="
 
   # PHP 5.5 is still in alpha, so ignore build failures.
   allow_failures:
     - php: 5.5
 
-install: composer install --dev
+install: composer install --dev --prefer-source
 script:  ./vendor/bin/travis-build
