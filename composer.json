@@ -14,8 +14,7 @@
         "php": ">=5.3.3"
     },
     "require-dev": {
-        "icecave/testing": "~2",
-        "icecave/woodhouse": "*"
+        "icecave/testing": "~1"
     },
     "autoload": {
         "psr-0": {
