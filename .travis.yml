@@ -11,7 +11,7 @@ matrix:
   include:
     - php: 5.4
       env:
-        - secure: "JqwOvga8I+3P8g2ACTSSrDH7FMGM8ul6e3DsF3ltH5A6nE+me+bV8CJtsIYE\nwtjp2e1D0IJoNezoxjYhQWJkUk7sH6uTV/FK4b3s9gu4lXVR/h7LVbVldBhe\nMVrXuzHaPnyOD+2wSS2SNPQ8Ek7YMOyU9jfxhUyPVxF1E4hguTo="
+        - secure: "a+W2jlDiRaB/fcP8FczHzAJIkwdcMzoz0/ADlZvREjcZop9TzG+jm6UFy4QW\nCdCkHJfht2pMAz+DUoMV0UCb1s44Q65s8rlzqp1ex3X+K3RBk5In4BvOqeiV\nqVVuH98AB9W1W+EAg9tUgrlZvOeOTD3zgnWgOQ5wQV1aVSQ+iTk="
 
   # PHP 5.5 is still in alpha, so ignore build failures.
   allow_failures:

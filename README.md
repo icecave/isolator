@@ -14,18 +14,7 @@ used in place of any global function calls that you may want to replace when tes
 
 ## Installation
 
-**Isolator** requires PHP 5.3.3 or later.
-
-### With [Composer](http://getcomposer.org/)
-
-* Add 'icecave/isolator' to the project's composer.json dependencies
-* Run `composer install`
-
-### Bare installation
-
-* Clone from GitHub: `git clone git://github.com/IcecaveStudios/isolator.git`
-* Use a [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
-  compatible autoloader (namespace 'Icecave\Isolator' in the 'lib' directory)
+* Available as [Composer](http://getcomposer.org) package [icecave/isolator](https://packagist.org/packages/icecave/isolator)
 
 ## Example
 

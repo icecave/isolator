@@ -1,21 +1,21 @@
 {
-    "hash": "7375f9403171a4fe71d6df88dfa3892c",
+    "hash": "e612963050c0ef631ccb523ad392d692",
     "packages": [
 
     ],
     "packages-dev": [
         {
             "name": "icecave/testing",
-            "version": "1.1.4",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/IcecaveStudios/testing.git",
-                "reference": "1.1.4"
+                "reference": "2.1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/IcecaveStudios/testing/archive/1.1.4.zip",
-                "reference": "1.1.4",
+                "url": "https://api.github.com/repos/IcecaveStudios/testing/zipball/2.1.2",
+                "reference": "2.1.2",
                 "shasum": ""
             },
             "require": {
@@ -23,9 +23,10 @@
             },
             "suggest": {
                 "eloquent/asplode": "Use the asplode error handler instead of PHPUnit's internal error handler.",
-                "eloquent/liberator": "Use liberator for circumventing PHP access modifier restrictions inside tests."
+                "eloquent/liberator": "Use liberator for circumventing PHP access modifier restrictions inside tests.",
+                "icecave/woodhouse": "Publish your code coverage information to GitHub pages."
             },
-            "time": "2013-01-18 02:42:39",
+            "time": "2013-02-08 01:30:36",
             "bin": [
                 "bin/phpunit",
                 "bin/phpunit-coverage",
@@ -33,7 +34,7 @@
                 "bin/travis-build"
             ],
             "type": "library",
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -71,14 +72,13 @@
             "require": {
                 "php": ">=5.2.0"
             },
-            "time": "2012-05-14 08:06:51",
+            "time": "2012-05-14 15:06:51",
             "type": "library",
             "autoload": {
                 "classmap": [
                     "src"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
             "include-path": [
                 "src"
             ],
@@ -88,7 +88,9 @@
             "authors": [
                 {
                     "name": "Mike Lively",
-                    "email": "m@digitalsandwich.com"
+                    "email": "m@digitalsandwich.com",
+                    "homepage": null,
+                    "role": null
                 }
             ],
             "description": "The Phake mock testing library",
