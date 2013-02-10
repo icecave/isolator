@@ -1,7 +1,8 @@
-![Isolator](http://icecave.com.au/assets/img/project-icons/icon-isolator.png)
-
+![Isolator](http://icecave.com.au/assets/img/project-icons/icon-isolator.png)<br>&nbsp;&nbsp;
 [![Build Status](https://api.travis-ci.org/IcecaveStudios/isolator.png)](http://travis-ci.org/IcecaveStudios/isolator)
 [![Test Coverage](http://icecave.com.au/isolator/coverage-report/coverage.png)](http://icecave.com.au/isolator/coverage-report/index.html)
+
+---
 
 **Isolator** is a small library for easing testing of classes that make use of global functions.
 
