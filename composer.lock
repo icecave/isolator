@@ -1,58 +1,69 @@
 {
-    "hash": "7375f9403171a4fe71d6df88dfa3892c",
+    "hash": "19d8294ce3ec27713331a016ddc36692",
     "packages": [
 
     ],
     "packages-dev": [
         {
-            "name": "icecave/testing",
-            "version": "1.1.4",
+            "name": "icecave/archer",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/IcecaveStudios/testing.git",
-                "reference": "1.1.4"
+                "url": "https://github.com/IcecaveStudios/archer.git",
+                "reference": "0.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/IcecaveStudios/testing/archive/1.1.4.zip",
-                "reference": "1.1.4",
+                "url": "https://api.github.com/repos/IcecaveStudios/archer/zipball/0.3.0",
+                "reference": "0.3.0",
                 "shasum": ""
             },
             "require": {
-                "phake/phake": "1.*"
+                "phake/phake": ">=1.0,<2.0",
+                "php": ">=5.3",
+                "symfony/console": ">=2.0,<3.0",
+                "symfony/process": ">=2.0,<3.0"
             },
             "suggest": {
-                "eloquent/asplode": "Use the asplode error handler instead of PHPUnit's internal error handler.",
-                "eloquent/liberator": "Use liberator for circumventing PHP access modifier restrictions inside tests."
+                "ext-openssl": "OpenSSL is required to encrypt GitHub OAuth tokens for artifact publication."
             },
-            "time": "2013-01-18 02:42:39",
             "bin": [
-                "bin/phpunit",
-                "bin/phpunit-coverage",
-                "bin/travis-init",
-                "bin/travis-build"
+                "bin/archer",
+                "bin/woodhouse"
             ],
             "type": "library",
-            "notification-url": "http://packagist.org/downloads/",
+            "autoload": {
+                "psr-0": {
+                    "Icecave\\Archer": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
+                    "name": "Erin Millard",
+                    "email": "ezzatron@gmail.com",
+                    "homepage": "http://ezzatron.com/"
+                },
+                {
                     "name": "James Harris",
                     "email": "james.harris@icecave.com.au"
                 }
             ],
-            "description": "Helper package for testing Icecave projects in a uniform way.",
-            "homepage": "https://github.com/IcecaveStudios/testing",
+            "description": "PHP testing and continuous integration by convention.",
+            "homepage": "https://github.com/IcecaveStudios/archer",
             "keywords": [
-                "testing",
+                "artifacts",
+                "coverage",
+                "phake",
                 "phpunit",
                 "test",
-                "unit",
-                "phake",
-                "coverage"
-            ]
+                "testing",
+                "unit"
+            ],
+            "time": "2013-03-28 06:17:00"
         },
         {
             "name": "phake/phake",
@@ -71,14 +82,13 @@
             "require": {
                 "php": ">=5.2.0"
             },
-            "time": "2012-05-14 08:06:51",
             "type": "library",
             "autoload": {
                 "classmap": [
                     "src"
                 ]
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 "src"
             ],
@@ -94,9 +104,104 @@
             "description": "The Phake mock testing library",
             "homepage": "https://github.com/mlively/Phake",
             "keywords": [
-                "testing",
-                "mock"
-            ]
+                "mock",
+                "testing"
+            ],
+            "time": "2012-05-14 08:06:51"
+        },
+        {
+            "name": "symfony/console",
+            "version": "v2.2.0",
+            "target-dir": "Symfony/Component/Console",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Console.git",
+                "reference": "v2.2.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/v2.2.0",
+                "reference": "v2.2.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Console\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Console Component",
+            "homepage": "http://symfony.com",
+            "time": "2013-03-01 06:43:14"
+        },
+        {
+            "name": "symfony/process",
+            "version": "v2.2.0",
+            "target-dir": "Symfony/Component/Process",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Process.git",
+                "reference": "v2.2.0-RC3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/v2.2.0-RC3",
+                "reference": "v2.2.0-RC3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Process\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "http://symfony.com",
+            "time": "2013-02-18 21:28:10"
         }
     ],
     "aliases": [
@@ -104,6 +209,12 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": [
+
+    ],
+    "platform": {
+        "php": ">=5.3.3"
+    },
+    "platform-dev": [
 
     ]
 }

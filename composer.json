@@ -1,7 +1,6 @@
 {
     "name": "icecave/isolator",
-    "type": "library",
-    "description": "Mock out calls to built-in PHP functions.",
+    "description": "Isolate PHP tests from the global environment.",
     "keywords": ["test", "phpunit", "phake", "unit", "mock", "fake"],
     "homepage": "https://github.com/IcecaveStudios/isolator",
     "license": "MIT",
@@ -15,7 +14,7 @@
         "php": ">=5.3.3"
     },
     "require-dev": {
-        "icecave/testing": "1.*"
+        "icecave/archer": "~0.3"
     },
     "autoload": {
         "psr-0": {

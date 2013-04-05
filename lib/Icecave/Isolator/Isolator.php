@@ -38,21 +38,13 @@ class Isolator
             case 'eval':
                 return eval(current($arguments));
             case 'include':
-                include current($arguments);
-
-                return;
+                return include current($arguments);
             case 'include_once':
-                include_once current($arguments);
-
-                return;
+                return include_once current($arguments);
             case 'require':
-                require current($arguments);
-
-                return;
+                return require current($arguments);
             case 'require_once':
-                require_once current($arguments);
-
-                return;
+                return require_once current($arguments);
             default:
 
         }
