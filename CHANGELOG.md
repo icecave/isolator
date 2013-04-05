@@ -1,5 +1,10 @@
 # Isolator Changelog
 
+### 2.1.2
+
+* Return values of isolated include/require[_once] calls are now propagated correctly
+* Integrated icecave/archer
+
 ### 2.1.1
 
 * Improved documentation
