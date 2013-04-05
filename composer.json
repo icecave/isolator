@@ -14,7 +14,7 @@
         "php": ">=5.3.3"
     },
     "require-dev": {
-        "icecave/archer": "~0.2"
+        "icecave/archer": "~0.3"
     },
     "autoload": {
         "psr-0": {
