@@ -1,9 +1,7 @@
-# ![Isolator]
+# Isolator
 
 [![Build Status]](http://travis-ci.org/IcecaveStudios/isolator)
 [![Test Coverage]](http://icecave.com.au/isolator/artifacts/tests/coverage)
-
----
 
 **Isolator** is a small library for easing testing of classes that make use of global functions.
 
@@ -115,6 +113,5 @@ Using an isolator is most helpful when testing code that uses global functions w
 Several of PHP's core global functions have some peculiarities and inconsitencies in the way they are defined. **Isolator** attempts to accomodate such inconsistencies when possible, but at this point there has not been a great deal of testing of this functionality.
 
 <!-- references -->
-[Isolator]: http://icecave.com.au/assets/img/project-icons/icon-isolator.png
 [Build Status]: https://raw.github.com/IcecaveStudios/isolator/gh-pages/artifacts/images/icecave/regular/build-status.png
 [Test Coverage]: https://raw.github.com/IcecaveStudios/isolator/gh-pages/artifacts/images/icecave/regular/coverage.png
