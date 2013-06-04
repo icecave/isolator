@@ -3,10 +3,12 @@
 [![Build Status]](http://travis-ci.org/IcecaveStudios/isolator)
 [![Test Coverage]](http://icecave.com.au/isolator/artifacts/tests/coverage)
 
-**Isolator** is a small library for easing testing of classes that make use of global functions.
+**Isolator** simplifies testing of classes that make use of global functions by treating all global functions as methods
+on and "isolator" object.
 
 A large number of PHP extensions (and the PHP core) still implement their functionality in global functions.
-Testing classes that use these functions quickly becomes difficult due to the inability to replace them with [test doubles](http://en.wikipedia.org/wiki/Test_double).
+Testing classes that use these functions quickly becomes difficult due to the inability to replace them with
+[test doubles](http://en.wikipedia.org/wiki/Test_double).
 
 **Isolator** endeavours to solve this problem by acting as a proxy between your class and global functions.
 An isolator instance is passed into your object as [dependency](http://en.wikipedia.org/wiki/Dependency_injection) and
@@ -17,7 +19,8 @@ used in place of any global function calls that you may want to replace when tes
 
 ## Example
 
-The following class makes use of [file_get_contents()](http://php.net/manual/en/function.file-get-contents.php) to read the contents of a file.
+The following class makes use of [file_get_contents()](http://php.net/manual/en/function.file-get-contents.php) to read
+the contents of a file.
 
 ```php
 <?php
@@ -37,9 +40,9 @@ class MyDocument
 }
 ```
 
-Despite the simplicity of the example, the class immediately becomes difficult to test due to it's reliance on the filesystem.
-In order to test this class you might be inclined to set up some static fixtures on disk, make a temporary directory when your test suite
-is set up or perhaps even use a [virtual filesystem wrapper](http://code.google.com/p/bovigo/wiki/vfsStream).
+Despite the simplicity of the example, the class immediately becomes difficult to test due to it's reliance on the
+filesystem. In order to test this class you might be inclined to set up some static fixtures on disk, make a temporary
+directory when your test suite is set up or perhaps even use a [virtual filesystem wrapper](http://code.google.com/p/bovigo/wiki/vfsStream).
 
 **Isolator** provides a fourth alternative. Given below is the same example rewritten using an `Isolator` instance.
 
@@ -71,10 +74,11 @@ using the `Isolator::get()` method. If a non-null value is passed to `Isolator::
 you to replace the isolator when necessary.
 
 `MyDocument::getContents()` is also updated to use the isolator instance rather than calling the global function directly.
-The behavior of `MyDocument` remains unchanged but testing the class is easy, as will be shown in the example test suite below.
+The behavior of `MyDocument` remains unchanged but testing the class is easy, as will be shown in the example test suite
+below.
 
-*Note: The test below is written for the [PHPUnit](http://www.phpunit.de) testing framework, using [Phake](https://github.com/mlively/Phake) for mocking.
-Phake provides a more flexible alternative to PHPUnit's built-in mock objects.*
+*Note: The test below is written for the [PHPUnit](http://www.phpunit.de) testing framework, using [Phake](https://github.com/mlively/Phake)
+for mocking. Phake provides a more flexible alternative to PHPUnit's built-in mock objects.*
 
 ```php
 <?php
@@ -117,7 +121,7 @@ such as `strlen()`, for example.
 ## Peculiarities
 
 Several of PHP's core global functions have some peculiarities and inconsitencies in the way they are defined.
-**Isolator** attempts to accomodate such inconsistencies when possible, but may have issues with some native (C) functions
+**Isolator** attempts to accomodate such inconsistencies when possible, but may have issues with some native C functions
 for which parameter reflection information is non-standard or incorrect.
 
 <!-- references -->
