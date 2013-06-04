@@ -1,10 +1,10 @@
 <?php
 namespace Icecave\Isolator;
 
+use Phake;
+use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use ReflectionFunction;
-use PHPUnit_Framework_TestCase;
-use Phake;
 
 class IsolatorTest extends PHPUnit_Framework_TestCase
 {
