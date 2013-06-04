@@ -1,28 +1,35 @@
 # Isolator Changelog
 
-### 2.1.2
+### 2.2.0 (2013-06-04)
 
-* Return values of isolated include/require[_once] calls are now propagated correctly
-* Integrated icecave/archer
+* **[NEW]** Added `IsolatorTrait` to easily add an isolator dependency to a class
+* **[NEW]** Added `Isolator::className()` method to get the actual class name of the generated isolator
+* **[IMPROVED]** Several minor improvements to PSR compliance, documentation and test coverage
 
-### 2.1.1
+### 2.1.2 (2013-04-04)
 
-* Improved documentation
-* Integrated icecave/testing
-* Improved PSR compliance
+* **[FIX]** Return values of isolated `include/require[_once]` calls are now propagated correctly
+* **[NEW]** Integrated icecave/archer (previous icecave/testing)
 
-### 2.1.0
+### 2.1.1 (2013-01-13)
 
-* Added support for isolation of inclusion directives (include/require[_once])
+* **[NEW]** Integrated icecave/testing
+* **[IMPROVED]** Improved documentation
+* **[IMPROVED]** Improved PSR compliance
 
-### 2.0.2
+### 2.1.0 (2012-08-12)
 
-* Changed vendor namespace from IcecaveStudios to Icecave
+* **[NEW]** Added support for isolation of inclusion directives (`include/require[_once]`)
 
-### 1.0.1
+### 2.0.0 (2012-08-04)
 
-* Re-organised directory layout to be consistent with other Composer projects
+* **[BC]** Changed vendor namespace from `IcecaveStudios` to `Icecave`
+* **[BC]** Changed composer package name from `IcecaveStudios/isolator` to `icecave/isolator`
 
-### 1.0.0
+### 1.0.1 (2012-07-29)
+
+* **[IMPROVED]** Re-organised directory layout to be consistent with other Composer projects
+
+### 1.0.0 (2012-07-09)
 
 * Initial release

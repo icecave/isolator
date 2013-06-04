@@ -1,10 +1,10 @@
 <?php
 namespace Icecave\Isolator;
 
+use Phake;
+use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use ReflectionFunction;
-use PHPUnit_Framework_TestCase;
-use Phake;
 
 class IsolatorTest extends PHPUnit_Framework_TestCase
 {
@@ -36,56 +36,56 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
     public function testInclude()
     {
         $isolator = new Isolator;
-        $this->assertFalse(class_exists(__NAMESPACE__.'\TestFixture\ClassA', FALSE));
+        $this->assertFalse(class_exists(__NAMESPACE__.'\TestFixture\ClassA', false));
 
         $this->assertSame(
             'returnValueA',
             $isolator->include(__DIR__.'/../../../lib/Icecave/Isolator/TestFixture/ClassA.php')
         );
-        $this->assertTrue(class_exists(__NAMESPACE__.'\TestFixture\ClassA', FALSE));
+        $this->assertTrue(class_exists(__NAMESPACE__.'\TestFixture\ClassA', false));
     }
 
     public function testIncludeOnce()
     {
         $isolator = new Isolator;
-        $this->assertFalse(class_exists(__NAMESPACE__.'\TestFixture\ClassB', FALSE));
+        $this->assertFalse(class_exists(__NAMESPACE__.'\TestFixture\ClassB', false));
 
         $this->assertSame(
             'returnValueB',
             $isolator->include_once(__DIR__.'/../../../lib/Icecave/Isolator/TestFixture/ClassB.php')
         );
-        $this->assertTrue(class_exists(__NAMESPACE__.'\TestFixture\ClassB', FALSE));
+        $this->assertTrue(class_exists(__NAMESPACE__.'\TestFixture\ClassB', false));
     }
 
     public function testRequire()
     {
         $isolator = new Isolator;
-        $this->assertFalse(class_exists(__NAMESPACE__.'\TestFixture\ClassC', FALSE));
+        $this->assertFalse(class_exists(__NAMESPACE__.'\TestFixture\ClassC', false));
 
         $this->assertSame(
             'returnValueC',
             $isolator->require(__DIR__.'/../../../lib/Icecave/Isolator/TestFixture/ClassC.php')
         );
-        $this->assertTrue(class_exists(__NAMESPACE__.'\TestFixture\ClassC', FALSE));
+        $this->assertTrue(class_exists(__NAMESPACE__.'\TestFixture\ClassC', false));
     }
 
     public function testRequireOnce()
     {
         $isolator = new Isolator;
-        $this->assertFalse(class_exists(__NAMESPACE__.'\TestFixture\ClassD', FALSE));
+        $this->assertFalse(class_exists(__NAMESPACE__.'\TestFixture\ClassD', false));
 
         $this->assertSame(
             'returnValueD',
             $isolator->require_once(__DIR__.'/../../../lib/Icecave/Isolator/TestFixture/ClassD.php')
         );
-        $this->assertTrue(class_exists(__NAMESPACE__.'\TestFixture\ClassD', FALSE));
+        $this->assertTrue(class_exists(__NAMESPACE__.'\TestFixture\ClassD', false));
     }
 
     public function testGet()
     {
         $isolator = new Isolator;
         $this->assertSame($isolator, Isolator::get($isolator));
-        $this->assertInstanceOf(__NAMESPACE__ . '\Isolator', Isolator::get(NULL));
+        $this->assertInstanceOf(__NAMESPACE__ . '\Isolator', Isolator::get(null));
     }
 
     public function testGetIsolator()
@@ -97,15 +97,15 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
 
     public function testGetIsolatorNoReferences()
     {
-        $isolator = Isolator::getIsolator(FALSE);
+        $isolator = Isolator::getIsolator(false);
         $this->assertSame(__NAMESPACE__ . '\Isolator', get_class($isolator));
     }
 
     public function testGetIsolatorExistingInstance()
     {
-        $isolator = Isolator::getIsolator(FALSE);
+        $isolator = Isolator::getIsolator(false);
         $this->assertInstanceOf(__NAMESPACE__ . '\Isolator', $isolator);
-        $this->assertSame($isolator, Isolator::getIsolator(FALSE));
+        $this->assertSame($isolator, Isolator::getIsolator(false));
     }
 
     public function testGetIsolatorNewInstance()
@@ -130,7 +130,7 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
             ->get_defined_functions()
             ->thenReturn($functions);
 
-        $isolator = Isolator::getIsolator(TRUE, $generator, $internalIsolator);
+        $isolator = Isolator::getIsolator(true, $generator, $internalIsolator);
         $this->assertInstanceOf(__NAMESPACE__ . '\Isolator', $isolator);
 
         Phake::inOrder(
@@ -141,6 +141,13 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
         // Invoking a second time should not produce any additional calls to the generator or isolator ...
         Phake::verifyNoFurtherInteraction($generator);
         Phake::verifyNoFurtherInteraction($internalIsolator);
-        $this->assertSame($isolator, Isolator::getIsolator(TRUE, $generator, $isolator));
+        $this->assertSame($isolator, Isolator::getIsolator(true, $generator, $isolator));
+    }
+
+    public function testClassName()
+    {
+        $isolator = Isolator::getIsolator();
+
+        $this->assertSame(get_class($isolator), Isolator::className());
     }
 }

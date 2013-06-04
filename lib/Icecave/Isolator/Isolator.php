@@ -3,6 +3,9 @@ namespace Icecave\Isolator;
 
 use ReflectionFunction;
 
+/**
+ * Isolate calls to global PHP functions.
+ */
 class Isolator
 {
     /**
@@ -53,15 +56,15 @@ class Isolator
     }
 
     /**
-     * Fetch a usable isolator instance, or return an existing one.
+     * Fetch an isolator instance.
      *
-     * If no instance is provided, a new instance will be created and returned.
+     * This convenience method returns the global isolator instance, or $instance if provided.
      *
-     * @param Isolator|NULL $instance An existing isolator instance, if available.
+     * @param Isolator|null $instance An existing isolator instance, if available.
      *
-     * @return Isolator A new isolator instance, or the provided instance if available.
+     * @return Isolator The global isolator instance, or $instance if provided.
      */
-    public static function get(Isolator $instance = NULL)
+    public static function get(Isolator $instance = null)
     {
         if ($instance) {
             return $instance;
@@ -71,16 +74,26 @@ class Isolator
     }
 
     /**
+     * Fetch the isolator class name.
+     *
+     * @return string The concrete class name for the global isolator instance.
+     */
+    public static function className()
+    {
+        return get_class(static::get());
+    }
+
+    /**
      * Fetch the default isolator instance, constructing it if necessary.
      *
      * @param boolean        $handleReferences Indicates whether or not the isolator should account for functions with reference parameters and return types.
-     * @param Generator|NULL $generator        The Generator instance to use to construct the concreate isolator class, or NULL to use the default.
-     * @param Isolator|NULL  $isolator         The isolator used to access the global list of functions, or NULL to use the default.
+     * @param Generator|null $generator        The Generator instance to use to construct the concreate isolator class, or null to use the default.
+     * @param Isolator|null  $isolator         The isolator used to access the global list of functions, or null to use the default.
      */
-    public static function getIsolator($handleReferences = TRUE, Generator $generator = NULL, Isolator $isolator = NULL)
+    public static function getIsolator($handleReferences = true, Generator $generator = null, Isolator $isolator = null)
     {
         // Global instance already initialized ...
-        if (self::$instance !== NULL) {
+        if (self::$instance !== null) {
             return self::$instance;
         }
 
@@ -90,12 +103,12 @@ class Isolator
         }
 
         // Construct an isolator generator to create the concreate isolator class ...
-        if ($generator === NULL) {
+        if ($generator === null) {
             $generator = new Generator;
         }
 
         // Get a basic isolator to use for reflection ...
-        if ($isolator === NULL) {
+        if ($isolator === null) {
             $isolator = new self;
         }
 
@@ -118,7 +131,7 @@ class Isolator
      */
     public static function resetIsolator()
     {
-        self::$instance = NULL;
+        self::$instance = null;
     }
 
     private static $instance;

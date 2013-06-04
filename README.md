@@ -1,9 +1,7 @@
-# ![Isolator]
+# Isolator
 
 [![Build Status]](http://travis-ci.org/IcecaveStudios/isolator)
 [![Test Coverage]](http://icecave.com.au/isolator/artifacts/tests/coverage)
-
----
 
 **Isolator** is a small library for easing testing of classes that make use of global functions.
 
@@ -14,9 +12,8 @@ Testing classes that use these functions quickly becomes difficult due to the in
 An isolator instance is passed into your object as [dependency](http://en.wikipedia.org/wiki/Dependency_injection) and
 used in place of any global function calls that you may want to replace when testing.
 
-## Installation
-
-* Available as [Composer](http://getcomposer.org) package [icecave/isolator](https://packagist.org/packages/icecave/isolator)
+* Install via [Composer](http://getcomposer.org) package [icecave/isolator](https://packagist.org/packages/icecave/isolator)
+* Read the [API documentation](http://icecavestudios.github.io/isolator/artifacts/documentation/api/)
 
 ## Example
 
@@ -40,11 +37,11 @@ class MyDocument
 }
 ```
 
-Despite the simplicity of the example the class immediately becomes difficult to test due to it's reliance on the filesystem.
+Despite the simplicity of the example, the class immediately becomes difficult to test due to it's reliance on the filesystem.
 In order to test this class you might be inclined to set up some static fixtures on disk, make a temporary directory when your test suite
 is set up or perhaps even use a [virtual filesystem wrapper](http://code.google.com/p/bovigo/wiki/vfsStream).
 
-**Isolator** provides a fourth alternative. Given below is the same example rewritten using an Isolator instance.
+**Isolator** provides a fourth alternative. Given below is the same example rewritten using an `Isolator` instance.
 
 ```php
 <?php
@@ -52,7 +49,7 @@ use Icecave\Isolator\Isolator;
 
 class MyDocument
 {
-    public function __construct($filename, Isolator $isolator = NULL)
+    public function __construct($filename, Isolator $isolator = null)
     {
         $this->filename = $filename;
         $this->isolator = Isolator::get($isolator);
@@ -68,11 +65,16 @@ class MyDocument
 }
 ```
 
-MyDocument now takes an instance of Isolator in it's constructor. It would a pain and unnecessary to specify the Isolator instance every time you construct an object in your production code, so a shared instance is made accessible using the Isolator::get() method. If a non-NULL value is passed to Isolator::get() it is returned unchanged, allowing you to replace the Isolator when necessary.
+MyDocument now takes an instance of `Isolator` in it's constructor. It would be a pain - and unnecessary - to specify the
+`Isolator` instance every time you construct an object in your production code, so a shared instance is made accessible
+using the `Isolator::get()` method. If a non-null value is passed to `Isolator::get()` it is returned unchanged, allowing
+you to replace the isolator when necessary.
 
-MyDocument::getContents() is also updated to use the isolator instance rather than calling the global function directly. The behavior of MyDocument remains unchanged but testing the class is easy, as will be shown in the example test suite below.
+`MyDocument::getContents()` is also updated to use the isolator instance rather than calling the global function directly.
+The behavior of `MyDocument` remains unchanged but testing the class is easy, as will be shown in the example test suite below.
 
-*Note: The test below is written for the [PHPUnit](http://www.phpunit.de) testing framework, using [Phake](https://github.com/mlively/Phake) for mocking. Phake provides a more flexible alternative to PHPUnit's built-in mock objects.*
+*Note: The test below is written for the [PHPUnit](http://www.phpunit.de) testing framework, using [Phake](https://github.com/mlively/Phake) for mocking.
+Phake provides a more flexible alternative to PHPUnit's built-in mock objects.*
 
 ```php
 <?php
@@ -106,15 +108,18 @@ class MyDocumentTest extends PHPUnit_Framework_TestCase
 }
 ```
 
-The test verifies the behavior of the MyDocument class completely, without requiring any disk access.
+The test verifies the behavior of the `MyDocument` class completely, without requiring any disk access.
 
-Using an isolator is most helpful when testing code that uses global functions which maintain global state or utilize external resources such as databases, filesystems, etc. It is usually unnecessary to mock out deterministic functions such as strlen(), for example.
+Using an isolator is most helpful when testing code that uses global functions which maintain global state or utilize
+external resources such as databases, filesystems, etc. It is usually unnecessary to mock out deterministic functions
+such as `strlen()`, for example.
 
 ## Peculiarities
 
-Several of PHP's core global functions have some peculiarities and inconsitencies in the way they are defined. **Isolator** attempts to accomodate such inconsistencies when possible, but at this point there has not been a great deal of testing of this functionality.
+Several of PHP's core global functions have some peculiarities and inconsitencies in the way they are defined.
+**Isolator** attempts to accomodate such inconsistencies when possible, but may have issues with some native (C) functions
+for which parameter reflection information is non-standard or incorrect.
 
 <!-- references -->
-[Isolator]: http://icecave.com.au/assets/img/project-icons/icon-isolator.png
 [Build Status]: https://raw.github.com/IcecaveStudios/isolator/gh-pages/artifacts/images/icecave/regular/build-status.png
 [Test Coverage]: https://raw.github.com/IcecaveStudios/isolator/gh-pages/artifacts/images/icecave/regular/coverage.png
