@@ -9,15 +9,15 @@ use ReflectionFunction;
  */
 class Generator
 {
-    public function __construct($ellipsisExpansion = 10, Isolator $isolator = NULL)
+    public function __construct($ellipsisExpansion = 10, Isolator $isolator = null)
     {
         $this->ellipsisExpansion = $ellipsisExpansion;
         $this->isolator = $isolator ?: new Isolator; // Note, Isolator::getIsolator is not used to avoid recursion.
     }
 
-    public function generateClass(array $functionReflectors, $className = NULL, $baseClassName = 'Isolator')
+    public function generateClass(array $functionReflectors, $className = null, $baseClassName = 'Isolator')
     {
-        if ($className === NULL) {
+        if ($className === null) {
             $className = 'Isolator' . self::$count++;
         }
 
@@ -43,18 +43,18 @@ class Generator
     public function requiresIsolatorProxy(ReflectionFunction $reflector)
     {
         if ($reflector->isDisabled()) {
-            return FALSE;
+            return false;
         } elseif ($reflector->returnsReference()) {
-            return TRUE;
+            return true;
         }
 
         foreach ($reflector->getParameters() as $parameter) {
             if ($parameter->isPassedByReference()) {
-                return TRUE;
+                return true;
             }
         }
 
-        return FALSE;
+        return false;
     }
 
     public function inspect(ReflectionFunction $reflector)
@@ -105,7 +105,7 @@ class Generator
             }
             $param .= '$_' . $index;
             if ($index >= $minArity) {
-                $param .= ' = NULL';
+                $param .= ' = null';
             }
             $parameters[] = $param;
         }

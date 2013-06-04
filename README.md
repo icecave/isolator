@@ -50,7 +50,7 @@ use Icecave\Isolator\Isolator;
 
 class MyDocument
 {
-    public function __construct($filename, Isolator $isolator = NULL)
+    public function __construct($filename, Isolator $isolator = null)
     {
         $this->filename = $filename;
         $this->isolator = Isolator::get($isolator);
@@ -66,7 +66,7 @@ class MyDocument
 }
 ```
 
-MyDocument now takes an instance of Isolator in it's constructor. It would a pain and unnecessary to specify the Isolator instance every time you construct an object in your production code, so a shared instance is made accessible using the Isolator::get() method. If a non-NULL value is passed to Isolator::get() it is returned unchanged, allowing you to replace the Isolator when necessary.
+MyDocument now takes an instance of Isolator in it's constructor. It would a pain and unnecessary to specify the Isolator instance every time you construct an object in your production code, so a shared instance is made accessible using the Isolator::get() method. If a non-null value is passed to Isolator::get() it is returned unchanged, allowing you to replace the Isolator when necessary.
 
 MyDocument::getContents() is also updated to use the isolator instance rather than calling the global function directly. The behavior of MyDocument remains unchanged but testing the class is easy, as will be shown in the example test suite below.
 
