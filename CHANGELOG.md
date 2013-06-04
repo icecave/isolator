@@ -1,9 +1,15 @@
 # Isolator Changelog
 
+### 2.2.0 (2013-06-04)
+
+* **[NEW]** Added `IsolatorTrait` to easily add an isolator dependency to a class
+* **[NEW]** Added `Isolator::className()` method to get the actual class name of the generated isolator
+* **[IMPROVED]** Several minor improvements to PSR compliance, documentation and test coverage
+
 ### 2.1.2 (2013-04-04)
 
 * **[FIX]** Return values of isolated `include/require[_once]` calls are now propagated correctly
-* **[NEW**] Integrated icecave/archer (previous icecave/testing)
+* **[NEW]** Integrated icecave/archer (previous icecave/testing)
 
 ### 2.1.1 (2013-01-13)
 
