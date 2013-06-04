@@ -74,6 +74,16 @@ class Isolator
     }
 
     /**
+     * Fetch the isolator class name.
+     *
+     * @return string The concrete class name for the global isolator instance.
+     */
+    public static function className()
+    {
+        return get_class(static::get());
+    }
+
+    /**
      * Fetch the default isolator instance, constructing it if necessary.
      *
      * @param boolean        $handleReferences Indicates whether or not the isolator should account for functions with reference parameters and return types.

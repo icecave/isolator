@@ -143,4 +143,11 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
         Phake::verifyNoFurtherInteraction($internalIsolator);
         $this->assertSame($isolator, Isolator::getIsolator(true, $generator, $isolator));
     }
+
+    public function testClassName()
+    {
+        $isolator = Isolator::getIsolator();
+
+        $this->assertSame(get_class($isolator), Isolator::className());
+    }
 }
