@@ -56,13 +56,13 @@ class Isolator
     }
 
     /**
-     * Fetch a usable isolator instance, or return an existing one.
+     * Fetch an isolator instance.
      *
-     * If no instance is provided, a new instance will be created and returned.
+     * This convenience method returns the global isolator instance, or $instance if provided.
      *
      * @param Isolator|null $instance An existing isolator instance, if available.
      *
-     * @return Isolator The global isolator instance, or the provided instance if available.
+     * @return Isolator The global isolator instance, or $instance if provided.
      */
     public static function get(Isolator $instance = null)
     {
