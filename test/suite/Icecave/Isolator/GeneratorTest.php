@@ -17,6 +17,17 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testCallWithReference()
+    {
+        $isolator = Isolator::get();
+
+        $matches = array();
+
+        $isolator->preg_match('/.*/', 'foo', $matches);
+
+        $this->assertSame(array('foo'), $matches);
+    }
+
     public function testGenerateClass()
     {
         $reflector = Phake::mock('ReflectionFunction');
