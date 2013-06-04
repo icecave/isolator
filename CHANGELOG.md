@@ -9,11 +9,11 @@
 ### 2.1.2 (2013-04-04)
 
 * **[FIX]** Return values of isolated `include/require[_once]` calls are now propagated correctly
-* **[NEW]** Integrated icecave/archer (previous icecave/testing)
+* **[NEW]** Integrated `icecave/archer` (previously `icecave/testing`)
 
 ### 2.1.1 (2013-01-13)
 
-* **[NEW]** Integrated icecave/testing
+* **[NEW]** Integrated `icecave/testing`
 * **[IMPROVED]** Improved documentation
 * **[IMPROVED]** Improved PSR compliance
 
