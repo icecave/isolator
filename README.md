@@ -12,9 +12,8 @@ Testing classes that use these functions quickly becomes difficult due to the in
 An isolator instance is passed into your object as [dependency](http://en.wikipedia.org/wiki/Dependency_injection) and
 used in place of any global function calls that you may want to replace when testing.
 
-## Installation
-
-* Available as [Composer](http://getcomposer.org) package [icecave/isolator](https://packagist.org/packages/icecave/isolator)
+* Install via [Composer](http://getcomposer.org) package [icecave/isolator](https://packagist.org/packages/icecave/isolator)
+* Read the [API documentation](http://icecavestudios.github.io/isolator/artifacts/documentation/api/)
 
 ## Example
 
