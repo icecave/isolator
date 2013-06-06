@@ -1,7 +1,7 @@
 # Isolator
 
 [![Build Status]](http://travis-ci.org/IcecaveStudios/isolator)
-[![Test Coverage]](http://icecave.com.au/isolator/artifacts/tests/coverage)
+[![Test Coverage]](http://icecavestudios.github.io/isolator/artifacts/tests/coverage)
 
 **Isolator** simplifies testing of classes that make use of global functions by treating all global functions as methods
 on and "isolator" object.

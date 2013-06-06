@@ -1,6 +1,6 @@
 {
     "name": "icecave/isolator",
-    "description": "Isolate PHP tests from the global environment.",
+    "description": "Dependency injection for global functions.",
     "keywords": ["test", "phpunit", "phake", "unit", "mock", "fake"],
     "homepage": "https://github.com/IcecaveStudios/isolator",
     "license": "MIT",
