@@ -1,7 +1,8 @@
 # Isolator
 
-[![Build Status]](http://travis-ci.org/IcecaveStudios/isolator)
-[![Test Coverage]](http://icecavestudios.github.io/isolator/artifacts/tests/coverage)
+[![Build Status]](https://travis-ci.org/IcecaveStudios/isolator)
+[![Test Coverage]](https://coveralls.io/r/IcecaveStudios/isolator?branch=develop)
+[![SemVer]](http://semver.org)
 
 **Isolator** simplifies testing of classes that make use of global functions by treating all global functions as methods
 on and "isolator" object.
@@ -125,5 +126,6 @@ Several of PHP's core global functions have some peculiarities and inconsitencie
 for which parameter reflection information is non-standard or incorrect.
 
 <!-- references -->
-[Build Status]: https://raw.github.com/IcecaveStudios/isolator/gh-pages/artifacts/images/icecave/regular/build-status.png
-[Test Coverage]: https://raw.github.com/IcecaveStudios/isolator/gh-pages/artifacts/images/icecave/regular/coverage.png
+[Build Status]: https://travis-ci.org/IcecaveStudios/isolator.png?branch=develop
+[Test Coverage]: https://coveralls.io/repos/IcecaveStudios/isolator/badge.png?branch=develop
+[SemVer]: http://calm-shore-6115.herokuapp.com/?label=semver&value=2.2.0&color=green
