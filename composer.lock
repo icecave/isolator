@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f9a721c3700b62d95b0837b7d2f5e84e",
+    "hash": "df91fa64b40ec4bbf49599cf7dd0fa7b",
     "packages": [
 
     ],
@@ -102,16 +102,16 @@
         },
         {
             "name": "icecave/archer",
-            "version": "1.0.0-alpha.1",
+            "version": "1.0.0-alpha.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/IcecaveStudios/archer.git",
-                "reference": "1.0.0-alpha.1"
+                "reference": "1.0.0-alpha.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/IcecaveStudios/archer/zipball/1.0.0-alpha.1",
-                "reference": "1.0.0-alpha.1",
+                "url": "https://api.github.com/repos/IcecaveStudios/archer/zipball/1.0.0-alpha.2",
+                "reference": "1.0.0-alpha.2",
                 "shasum": ""
             },
             "require": {
@@ -170,7 +170,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2013-07-08 01:00:45"
+            "time": "2013-07-29 21:51:56"
         },
         {
             "name": "nikic/php-parser",
