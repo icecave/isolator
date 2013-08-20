@@ -83,12 +83,14 @@ for mocking. Phake provides a more flexible alternative to PHPUnit's built-in mo
 
 ```php
 <?php
+use Icecave\Isolator\Isolator;
+
 class MyDocumentTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
         // First a mocked isolator instance is created ...
-        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
+        $this->isolator = Phake::mock(Isolator::className());
 
         // That isolator instance is provided to the MyDocument instance that is to be tested ...
         $this->myDocument = new MyDocument('foo.txt', $this->isolator);
