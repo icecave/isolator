@@ -12,7 +12,7 @@ php: ["5.3", "5.4", "5.5"]
 
 env:
   global:
-    - ARCHER_PUBLISH_VERSION=5.4
+    - ARCHER_PUBLISH_VERSION=5.5
     - secure: "O/QlJbj5sRzjQifZBowuwIlBk9g1Ig6kGULzAdx0oXHEGgurH47IZcHkDBHvmqaAABXtE4K3jrd3cuX6Vm/7GiRThA5dYYMt40qnJdLEt8HlhrnmmlSIJQioS6l6x3UbBC3xvaeQYZIXgkyUjFSWVWsACXjYJwqtXaCuXXAvyNQ="
 
 install:

@@ -7,7 +7,8 @@
     "authors": [
         {
             "name": "James Harris",
-            "email": "james.harris@icecave.com.au"
+            "email": "james.harris@icecave.com.au",
+            "homepage": "https://github.com/jmalloc"
         }
     ],
     "require": {
@@ -15,6 +16,9 @@
     },
     "require-dev": {
         "icecave/archer": "~1"
+    },
+    "suggest": {
+        "eloquent/asplode": "Drop-in exception-based error handling."
     },
     "autoload": {
         "psr-0": {
