@@ -90,14 +90,16 @@ class MyDocumentTest extends PHPUnit_Framework_TestCase
         // First a mocked isolator instance is created ...
         $this->isolator = Phake::mock(Isolator::className());
 
-        // That isolator instance is provided to the MyDocument instance that is to be tested ...
+        // That isolator instance is provided to the MyDocument instance
+        // that is to be tested ...
         $this->myDocument = new MyDocument('foo.txt', $this->isolator);
     }
 
     public function testGetContents()
     {
-        // Phake is used to configure the mocked isolator to return a known string
-        // when file_get_contents() is called with a parameter equal to 'foo.txt' ...
+        // Phake is used to configure the mocked isolator to return a known
+        // string when file_get_contents() is called with a parameter equal
+        // to 'foo.txt' ...
         Phake::when($this->isolator)
           ->file_get_contents('foo.txt')
           ->thenReturn('This is the file contents.');
@@ -106,7 +108,8 @@ class MyDocumentTest extends PHPUnit_Framework_TestCase
         $contents = $this->myDocument->getContents();
         $this->assertEquals($contents, 'This is the file contents.');
 
-        // Finally Phake is used to verify that a call to file_get_contents() was made as expected ...
+        // Finally Phake is used to verify that a call to file_get_contents()
+        // was made as expected ...
         Phake::verify($this->isolator)
           ->file_get_contents('foo.txt');
     }
