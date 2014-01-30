@@ -129,6 +129,6 @@ Several of PHP's core global functions have some peculiarities and inconsitencie
 for which parameter reflection information is non-standard or incorrect.
 
 <!-- references -->
-[Build Status]: https://b.adge.me/travis/IcecaveStudios/isolator/develop.svg
-[Test Coverage]: https://b.adge.me/coveralls/IcecaveStudios/isolator/develop.svg
-[SemVer]: https://b.adge.me/:semver-2.2.0-brightgreen.svg
+[Build Status]: http://img.shields.io/travis/IcecaveStudios/isolator/develop.svg
+[Test Coverage]: http://img.shields.io/coveralls/IcecaveStudios/isolator/develop.svg
+[SemVer]: http://img.shields.io/:semver-2.2.0-brightgreen.svg
