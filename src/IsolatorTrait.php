@@ -9,7 +9,7 @@ trait IsolatorTrait
     /**
      * Get the {@see Isolator} instance used by this object.
      *
-     * @return Isolator The isolator set via {@see Isolator::setIsolator()}, or the default isolator if none has been set.
+     * @return Isolator The isolator set via {@see IsolatorTrait::setIsolator()}, or the default isolator if none has been set.
      */
     public function isolator()
     {

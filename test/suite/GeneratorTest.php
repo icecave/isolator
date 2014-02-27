@@ -9,11 +9,11 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->_isolator = Phake::mock(__NAMESPACE__ . '\Isolator');
-        $this->_generator = Phake::partialMock(
-            __NAMESPACE__ . '\Generator',
+        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
+        $this->generator = Phake::partialMock(
+            'Icecave\Isolator\Generator',
             5,
-            $this->_isolator
+            $this->isolator
         );
     }
 
@@ -33,17 +33,17 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
         $reflector = Phake::mock('ReflectionFunction');
         $reflectors = array($reflector);
 
-        Phake::when($this->_generator)
+        Phake::when($this->generator)
             ->requiresIsolatorProxy(Phake::anyParameters())
             ->thenReturn(true);
 
-        Phake::when($this->_generator)
+        Phake::when($this->generator)
             ->generateProxyMethod(Phake::anyParameters())
             ->thenReturn('/* method goes here */');
 
-        $this->setExpectedException('ReflectionException', 'Class ' . __NAMESPACE__ . '\TestIsolatorClass does not exist');
+        $this->setExpectedException('ReflectionException', 'Class Icecave\Isolator\TestIsolatorClass does not exist');
         try {
-            $this->_generator->generateClass($reflectors, 'TestIsolatorClass');
+            $this->generator->generateClass($reflectors, 'TestIsolatorClass');
         } catch (ReflectionException $e) {
             $expectedCode  = 'namespace Icecave\Isolator {' . PHP_EOL;
             $expectedCode .= 'class TestIsolatorClass extends Isolator {' . PHP_EOL;
@@ -53,9 +53,9 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
             $expectedCode .= '} // End namespace.' . PHP_EOL;
 
             Phake::inOrder(
-                Phake::verify($this->_generator)->requiresIsolatorProxy($reflector),
-                Phake::verify($this->_generator)->generateProxyMethod($reflector),
-                Phake::verify($this->_isolator)->eval($expectedCode)
+                Phake::verify($this->generator)->requiresIsolatorProxy($reflector),
+                Phake::verify($this->generator)->generateProxyMethod($reflector),
+                Phake::verify($this->isolator)->eval($expectedCode)
             );
             throw $e;
         }
@@ -93,7 +93,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
             array(false, true),
         );
 
-        $this->assertSame($expected, $this->_generator->inspect($reflector));
+        $this->assertSame($expected, $this->generator->inspect($reflector));
 
         Phake::inOrder(
             Phake::verify($reflector)->getParameters(),
@@ -149,7 +149,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->assertSame($expected, $this->_generator->inspect($reflector));
+        $this->assertSame($expected, $this->generator->inspect($reflector));
 
         $parameter2Verifier = Phake::verify($parameter2, Phake::times(2));
 
@@ -208,7 +208,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->assertSame($expected, $this->_generator->inspect($reflector));
+        $this->assertSame($expected, $this->generator->inspect($reflector));
 
         $parameter2Verifier = Phake::verify($parameter2, Phake::times(2));
 
@@ -267,7 +267,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
             ),
         );
 
-        $this->assertSame($expected, $this->_generator->inspect($reflector));
+        $this->assertSame($expected, $this->generator->inspect($reflector));
 
         $parameter2Verifier = Phake::verify($parameter2, Phake::times(2));
 
@@ -290,7 +290,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
             ->isDisabled()
             ->thenReturn(true);
 
-        $this->assertFalse($this->_generator->requiresIsolatorProxy($reflector));
+        $this->assertFalse($this->generator->requiresIsolatorProxy($reflector));
 
         Phake::verify($reflector)->isDisabled();
     }
@@ -306,7 +306,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
             ->returnsReference()
             ->thenReturn(true);
 
-        $this->assertTrue($this->_generator->requiresIsolatorProxy($reflector));
+        $this->assertTrue($this->generator->requiresIsolatorProxy($reflector));
 
         Phake::inOrder(
             Phake::verify($reflector)->isDisabled(),
@@ -340,7 +340,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
             ->isPassedByReference()
             ->thenReturn(true);
 
-        $this->assertTrue($this->_generator->requiresIsolatorProxy($reflector));
+        $this->assertTrue($this->generator->requiresIsolatorProxy($reflector));
 
         Phake::inOrder(
             Phake::verify($reflector)->isDisabled(),
@@ -377,7 +377,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
             ->isPassedByReference()
             ->thenReturn(false);
 
-        $this->assertFalse($this->_generator->requiresIsolatorProxy($reflector));
+        $this->assertFalse($this->generator->requiresIsolatorProxy($reflector));
 
         Phake::inOrder(
             Phake::verify($reflector)->isDisabled(),

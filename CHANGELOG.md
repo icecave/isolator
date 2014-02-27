@@ -1,5 +1,9 @@
 # Isolator Changelog
 
+### 2.2.1 (2014-02-27)
+
+* **[IMPROVED]** Updated autoloader to [PSR-4](http://www.php-fig.org/psr/psr-4/)
+
 ### 2.2.0 (2013-06-04)
 
 * **[NEW]** Added `IsolatorTrait` to easily add an isolator dependency to a class
@@ -9,11 +13,11 @@
 ### 2.1.2 (2013-04-04)
 
 * **[FIX]** Return values of isolated `include/require[_once]` calls are now propagated correctly
-* **[NEW]** Integrated icecave/archer (previous icecave/testing)
+* **[NEW]** Integrated `icecave/archer` (previously `icecave/testing`)
 
 ### 2.1.1 (2013-01-13)
 
-* **[NEW]** Integrated icecave/testing
+* **[NEW]** Integrated `icecave/testing`
 * **[IMPROVED]** Improved documentation
 * **[IMPROVED]** Improved PSR compliance
 

@@ -1,24 +1,28 @@
 {
     "name": "icecave/isolator",
-    "description": "Isolate PHP tests from the global environment.",
+    "description": "Dependency injection for global functions.",
     "keywords": ["test", "phpunit", "phake", "unit", "mock", "fake"],
     "homepage": "https://github.com/IcecaveStudios/isolator",
     "license": "MIT",
     "authors": [
         {
             "name": "James Harris",
-            "email": "james.harris@icecave.com.au"
+            "email": "james.harris@icecave.com.au",
+            "homepage": "https://github.com/jmalloc"
         }
     ],
     "require": {
         "php": ">=5.3"
     },
     "require-dev": {
-        "icecave/archer": "~0.4"
+        "icecave/archer": "~1"
+    },
+    "suggest": {
+        "eloquent/asplode": "Drop-in exception-based error handling."
     },
     "autoload": {
-        "psr-0": {
-            "Icecave\\Isolator": "lib"
+        "psr-4": {
+            "Icecave\\Isolator\\": "src"
         }
     }
 }
