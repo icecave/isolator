@@ -10,27 +10,24 @@ use PHPUnit_Framework_TestCase;
  */
 class IsolatorTraitTest extends PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
-        $this->object = new TraitUsage;
-    }
-
     public function testIsolator()
     {
+        $object = new TraitUsage;
+
         $instance = Isolator::get();
 
-        $this->assertSame($instance, $this->object->isolator());
+        $this->assertSame($instance, $object->isolator());
 
         $instance = Phake::mock(__NAMESPACE__ . '\Isolator');
 
-        $this->object->setIsolator($instance);
+        $object->setIsolator($instance);
 
-        $this->assertSame($instance, $this->object->isolator());
+        $this->assertSame($instance, $object->isolator());
 
-        $this->object->setIsolator(null);
+        $object->setIsolator(null);
 
         $instance = Isolator::get();
 
-        $this->assertSame($instance, $this->object->isolator());
+        $this->assertSame($instance, $object->isolator());
     }
 }
