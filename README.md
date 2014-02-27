@@ -5,19 +5,19 @@
 [![SemVer]](http://semver.org)
 
 **Isolator** simplifies testing of classes that make use of global functions by treating all global functions as methods
-on and "isolator" object.
+on an "isolator" object.
 
 * Install via [Composer](http://getcomposer.org) package [icecave/isolator](https://packagist.org/packages/icecave/isolator)
 * Read the [API documentation](http://icecavestudios.github.io/isolator/artifacts/documentation/api/)
 
 ## Rationale
 
-A large number of PHP extensions (and the PHP core) still implement their functionality in global functions. Testing
-classes that use these functions quickly becomes difficult due to the inability to replace them with [test doubles](http://en.wikipedia.org/wiki/Test_double).
+A large number of PHP extensions (and the PHP core) implement their functionality as global functions. Testing classes
+that use these functions quickly becomes difficult due to the inability to replace them with [test doubles](http://en.wikipedia.org/wiki/Test_double).
 
 **Isolator** endeavours to solve this problem by acting as a proxy between your class and global functions. An isolator
-instance is passed into your object as [dependency](http://en.wikipedia.org/wiki/Dependency_injection) and used in place
-of any global function calls that you may want to replace when testing.
+instance is passed into your object as a [dependency](http://en.wikipedia.org/wiki/Dependency_injection) and used in
+place of any global function calls that you may want to replace when testing.
 
 ## Example
 
@@ -121,6 +121,42 @@ The test verifies the behavior of the `MyDocument` class completely, without req
 Using an isolator is most helpful when testing code that uses global functions which maintain global state or utilize
 external resources such as databases, filesystems, etc. It is usually unnecessary to mock out deterministic functions
 such as `strlen()`, for example.
+
+## Isolator Trait
+
+In PHP 5.4 and later, it is also possible to use `IsolatorTrait` to bring an isolator into your class. The isolator
+instance is accessed using `$this->isolator()` and can be set via `$this->setIsolator()`.
+
+```php
+use Icecave\Isolator\IsolatorTrait;
+
+class MyDocument
+{
+    use IsolatorTrait;
+
+    public function __construct($filename)
+    {
+        $this->filename = $filename;
+    }
+
+    public function getContents()
+    {
+        return $this->isolator()->file_get_contents($this->filename);
+    }
+
+    protected $filename;
+    protected $isolator;
+}
+```
+
+## Language Constructs
+
+**Isolator** can also be used to invoke the following function-like language constructs:
+
+ * `include`, `include_once`, `require` and `require_once`
+ * `exit` and `die`
+ * `echo`
+ * `eval`
 
 ## Peculiarities
 
