@@ -1,5 +1,9 @@
 # Isolator Changelog
 
+### 2.2.1 (2014-02-27)
+
+* **[IMPROVED]** Updated autoloader to [PSR-4](http://www.php-fig.org/psr/psr-4/)
+
 ### 2.2.0 (2013-06-04)
 
 * **[NEW]** Added `IsolatorTrait` to easily add an isolator dependency to a class
