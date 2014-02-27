@@ -1,5 +1,5 @@
 <?php
-namespace Icecave\Isolator\TestFixture;
+namespace Icecave\Isolator;
 
 class ClassA
 {

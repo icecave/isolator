@@ -1,21 +1,17 @@
 <?php
 namespace Icecave\Isolator;
 
-use Icecave\Isolator\TestFixture\TraitUsage;
 use Phake;
 use PHPUnit_Framework_TestCase;
 
 /**
+ * @requires PHP 5.4
  * @covers Icecave\Isolator\IsolatorTrait
  */
 class IsolatorTraitTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (version_compare(PHP_VERSION, '5.4', '<')) {
-            $this->markTestSkipped('This test requires PHP v5.4 or above.');
-        }
-
         $this->object = new TraitUsage;
     }
 

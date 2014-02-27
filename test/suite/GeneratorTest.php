@@ -9,9 +9,9 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->isolator = Phake::mock(__NAMESPACE__ . '\Isolator');
+        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
         $this->generator = Phake::partialMock(
-            __NAMESPACE__ . '\Generator',
+            'Icecave\Isolator\Generator',
             5,
             $this->isolator
         );
@@ -41,7 +41,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
             ->generateProxyMethod(Phake::anyParameters())
             ->thenReturn('/* method goes here */');
 
-        $this->setExpectedException('ReflectionException', 'Class ' . __NAMESPACE__ . '\TestIsolatorClass does not exist');
+        $this->setExpectedException('ReflectionException', 'Class Icecave\Isolator\TestIsolatorClass does not exist');
         try {
             $this->generator->generateClass($reflectors, 'TestIsolatorClass');
         } catch (ReflectionException $e) {
