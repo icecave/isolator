@@ -51,9 +51,11 @@ class Isolator
             case 'require_once':
                 return require_once current($arguments);
             case 'new':
-                return self::__new__($arguments);
-            default:
+                $reflector = new ReflectionClass(
+                    array_shift($arguments)
+                );
 
+                return $reflector->newInstanceArgs($arguments);
         }
 
         return call_user_func_array($name, $arguments);
@@ -136,14 +138,6 @@ class Isolator
     public static function resetIsolator()
     {
         self::$instance = null;
-    }
-
-    private static function __new__(array $arguments)
-    {
-        $className = array_shift($arguments);
-        $reflector = new ReflectionClass($className);
-
-        return $reflector->newInstanceArgs($arguments);
     }
 
     private static $instance;

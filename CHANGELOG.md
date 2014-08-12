@@ -1,5 +1,9 @@
 # Isolator Changelog
 
+### 2.3.0 (2014-08-12)
+
+* **[NEW]** Added support for isolation of the `new` operator
+
 ### 2.2.1 (2014-02-27)
 
 * **[IMPROVED]** Updated autoloader to [PSR-4](http://www.php-fig.org/psr/psr-4/)
