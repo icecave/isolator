@@ -6,6 +6,7 @@ use Phake;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use ReflectionFunction;
+use SplObjectStorage;
 
 class IsolatorTest extends PHPUnit_Framework_TestCase
 {
@@ -83,6 +84,16 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
     }
 
     public function testNew()
+    {
+        $isolator = new Isolator;
+
+        $this->assertEquals(
+            new SplObjectStorage,
+            $isolator->new('SplObjectStorage')
+        );
+    }
+
+    public function testNewWithConstructorArguments()
     {
         $isolator = new Isolator;
 
