@@ -157,6 +157,7 @@ class MyDocument
  * `exit` and `die`
  * `echo`
  * `eval`
+ * `new`
 
 ## Peculiarities
 

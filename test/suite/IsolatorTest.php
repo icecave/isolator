@@ -1,6 +1,7 @@
 <?php
 namespace Icecave\Isolator;
 
+use DateTime;
 use Phake;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
@@ -79,6 +80,16 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
             $isolator->require_once(__DIR__ . '/../src/ClassD.php')
         );
         $this->assertTrue(class_exists('Icecave\Isolator\ClassD', false));
+    }
+
+    public function testNew()
+    {
+        $isolator = new Isolator;
+
+        $this->assertEquals(
+            new DateTime('2014-01-01 01:02:03 GMT'),
+            $isolator->new('DateTime', '2014-01-01 01:02:03 GMT')
+        );
     }
 
     public function testGet()

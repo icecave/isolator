@@ -1,6 +1,7 @@
 <?php
 namespace Icecave\Isolator;
 
+use ReflectionClass;
 use ReflectionFunction;
 
 /**
@@ -20,6 +21,7 @@ class Isolator
      *    - include_once
      *    - require
      *    - require_once
+     *    - new
      *
      * @param string $name      The name of the global function to call.
      * @param array  $arguments The arguments to the function.
@@ -48,6 +50,8 @@ class Isolator
                 return require current($arguments);
             case 'require_once':
                 return require_once current($arguments);
+            case 'new':
+                return self::__new__($arguments);
             default:
 
         }
@@ -132,6 +136,14 @@ class Isolator
     public static function resetIsolator()
     {
         self::$instance = null;
+    }
+
+    private static function __new__(array $arguments)
+    {
+        $className = array_shift($arguments);
+        $reflector = new ReflectionClass($className);
+
+        return $reflector->newInstanceArgs($arguments);
     }
 
     private static $instance;
