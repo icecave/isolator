@@ -157,6 +157,7 @@ class MyDocument
  * `exit` and `die`
  * `echo`
  * `eval`
+ * `new`
 
 ## Peculiarities
 
@@ -167,4 +168,4 @@ for which parameter reflection information is non-standard or incorrect.
 <!-- references -->
 [Build Status]: http://img.shields.io/travis/IcecaveStudios/isolator/develop.svg
 [Test Coverage]: http://img.shields.io/coveralls/IcecaveStudios/isolator/develop.svg
-[SemVer]: http://img.shields.io/:semver-2.2.1-brightgreen.svg
+[SemVer]: http://img.shields.io/:semver-2.3.0-brightgreen.svg
