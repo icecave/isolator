@@ -1,7 +1,14 @@
 {
     "name": "icecave/isolator",
     "description": "Dependency injection for global functions.",
-    "keywords": ["test", "phpunit", "phake", "unit", "mock", "fake"],
+    "keywords": [
+        "test",
+        "phpunit",
+        "phake",
+        "unit",
+        "mock",
+        "fake"
+    ],
     "homepage": "https://github.com/IcecaveStudios/isolator",
     "license": "MIT",
     "authors": [
@@ -17,12 +24,14 @@
     "require-dev": {
         "icecave/archer": "~1"
     },
-    "suggest": {
-        "eloquent/asplode": "Drop-in exception-based error handling."
-    },
     "autoload": {
         "psr-4": {
             "Icecave\\Isolator\\": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-develop": "2.3.x-dev"
         }
     }
 }
