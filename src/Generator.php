@@ -12,7 +12,7 @@ class Generator
     public function __construct($ellipsisExpansion = 10, Isolator $isolator = null)
     {
         $this->ellipsisExpansion = $ellipsisExpansion;
-        $this->isolator = $isolator ?: new Isolator; // Note, Isolator::getIsolator is not used to avoid recursion.
+        $this->isolator = $isolator ?: new Isolator(); // Note, Isolator::getIsolator is not used to avoid recursion.
     }
 
     public function generateClass(array $functionReflectors, $className = null, $baseClassName = 'Isolator')

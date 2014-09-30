@@ -105,17 +105,17 @@ class Isolator
 
         // No need to handle references, rely on default Isolator::__call() method ...
         if (!$handleReferences) {
-            return self::$instance = new self;
+            return self::$instance = new self();
         }
 
         // Construct an isolator generator to create the concreate isolator class ...
         if ($generator === null) {
-            $generator = new Generator;
+            $generator = new Generator();
         }
 
         // Get a basic isolator to use for reflection ...
         if ($isolator === null) {
-            $isolator = new self;
+            $isolator = new self();
         }
 
         // Create reflectors for each of the globally defined functions ...

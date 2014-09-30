@@ -18,26 +18,26 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
 
     public function testCall()
     {
-        $isolator = new Isolator;
+        $isolator = new Isolator();
         $this->assertSame(3, $isolator->strlen('foo'));
     }
 
     public function testEcho()
     {
-        $isolator = new Isolator;
+        $isolator = new Isolator();
         $this->expectOutputString('Echo works!');
         $isolator->echo('Echo works!');
     }
 
     public function testEval()
     {
-        $isolator = new Isolator;
+        $isolator = new Isolator();
         $this->assertSame(3, $isolator->eval('return strlen("foo");'));
     }
 
     public function testInclude()
     {
-        $isolator = new Isolator;
+        $isolator = new Isolator();
         $this->assertFalse(class_exists('Icecave\Isolator\ClassA', false));
 
         $this->assertSame(
@@ -49,7 +49,7 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
 
     public function testIncludeOnce()
     {
-        $isolator = new Isolator;
+        $isolator = new Isolator();
         $this->assertFalse(class_exists('Icecave\Isolator\ClassB', false));
 
         $this->assertSame(
@@ -61,7 +61,7 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
 
     public function testRequire()
     {
-        $isolator = new Isolator;
+        $isolator = new Isolator();
         $this->assertFalse(class_exists('Icecave\Isolator\ClassC', false));
 
         $this->assertSame(
@@ -73,7 +73,7 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
 
     public function testRequireOnce()
     {
-        $isolator = new Isolator;
+        $isolator = new Isolator();
         $this->assertFalse(class_exists('Icecave\Isolator\ClassD', false));
 
         $this->assertSame(
@@ -85,17 +85,17 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
 
     public function testNew()
     {
-        $isolator = new Isolator;
+        $isolator = new Isolator();
 
         $this->assertEquals(
-            new SplObjectStorage,
+            new SplObjectStorage(),
             $isolator->new('SplObjectStorage')
         );
     }
 
     public function testNewWithConstructorArguments()
     {
-        $isolator = new Isolator;
+        $isolator = new Isolator();
 
         $this->assertEquals(
             new DateTime('2014-01-01 01:02:03 GMT'),
@@ -105,7 +105,7 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
 
     public function testGet()
     {
-        $isolator = new Isolator;
+        $isolator = new Isolator();
         $this->assertSame($isolator, Isolator::get($isolator));
         $this->assertInstanceOf('Icecave\Isolator\Isolator', Isolator::get(null));
     }
