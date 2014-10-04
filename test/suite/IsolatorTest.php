@@ -8,8 +8,19 @@ use ReflectionClass;
 use ReflectionFunction;
 use SplObjectStorage;
 
+/**
+ * @covers Icecave\Isolator\Isolator
+ * @covers Icecave\Isolator\Generator
+ */
 class IsolatorTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        // Ensure that a new PHP file is always generated for the tests ...
+        $generator = new Generator;
+        $generator->generate(true);
+    }
+
     public function tearDown()
     {
         parent::tearDown();
@@ -117,6 +128,16 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
         $this->assertSame($isolator, Isolator::getIsolator());
     }
 
+    public function testCallWithReference()
+    {
+        $isolator = Isolator::get();
+
+        $matches = array();
+        $isolator->preg_match('/.*/', 'foo', $matches);
+
+        $this->assertSame(array('foo'), $matches);
+    }
+
     public function testGetIsolatorNoReferences()
     {
         $isolator = Isolator::getIsolator(false);
@@ -133,37 +154,14 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
     public function testGetIsolatorNewInstance()
     {
         $generator = Phake::mock('Icecave\Isolator\Generator');
+
         Phake::when($generator)
-            ->generateClass(Phake::anyParameters())
+            ->generate()
             ->thenReturn(new ReflectionClass('Icecave\Isolator\Isolator'));
 
-        $functions = array(
-            'internal' => array(
-                'strlen'
-            )
-        );
+        $isolator = Isolator::getIsolator(true, $generator);
 
-        $reflectors = array(
-            new ReflectionFunction('strlen')
-        );
-
-        $internalIsolator = Phake::mock('Icecave\Isolator\Isolator');
-        Phake::when($internalIsolator)
-            ->get_defined_functions()
-            ->thenReturn($functions);
-
-        $isolator = Isolator::getIsolator(true, $generator, $internalIsolator);
         $this->assertInstanceOf('Icecave\Isolator\Isolator', $isolator);
-
-        Phake::inOrder(
-            Phake::verify($internalIsolator)->get_defined_functions()
-            , Phake::verify($generator)->generateClass($reflectors)
-        );
-
-        // Invoking a second time should not produce any additional calls to the generator or isolator ...
-        Phake::verifyNoFurtherInteraction($generator);
-        Phake::verifyNoFurtherInteraction($internalIsolator);
-        $this->assertSame($isolator, Isolator::getIsolator(true, $generator, $isolator));
     }
 
     public function testClassName()

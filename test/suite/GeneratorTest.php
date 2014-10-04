@@ -1,9 +1,10 @@
 <?php
 namespace Icecave\Isolator;
 
-use ReflectionFunction;
-use PHPUnit_Framework_TestCase;
 use Phake;
+use PHPUnit_Framework_TestCase;
+use ReflectionException;
+use ReflectionFunction;
 
 class GeneratorTest extends PHPUnit_Framework_TestCase
 {
@@ -17,48 +18,33 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testCallWithReference()
-    {
-        $isolator = Isolator::get();
-
-        $matches = array();
-
-        $isolator->preg_match('/.*/', 'foo', $matches);
-
-        $this->assertSame(array('foo'), $matches);
-    }
-
     public function testGenerateClass()
     {
-        $reflector = Phake::mock('ReflectionFunction');
-        $reflectors = array($reflector);
-
         Phake::when($this->generator)
             ->requiresIsolatorProxy(Phake::anyParameters())
             ->thenReturn(true);
 
         Phake::when($this->generator)
             ->generateProxyMethod(Phake::anyParameters())
-            ->thenReturn('/* method goes here */');
+            ->thenReturn('/* method goes here */' . PHP_EOL);
 
-        $this->setExpectedException('ReflectionException', 'Class Icecave\Isolator\TestIsolatorClass does not exist');
-        try {
-            $this->generator->generateClass($reflectors, 'TestIsolatorClass');
-        } catch (ReflectionException $e) {
-            $expectedCode  = 'namespace Icecave\Isolator {' . PHP_EOL;
-            $expectedCode .= 'class TestIsolatorClass extends Isolator {' . PHP_EOL;
-            $expectedCode .= PHP_EOL;
-            $expectedCode .= '/* method goes here */' . PHP_EOL;
-            $expectedCode .= '} // End class.' . PHP_EOL;
-            $expectedCode .= '} // End namespace.' . PHP_EOL;
+        $expectedCode  = '<?php' . PHP_EOL;
+        $expectedCode .= 'namespace Icecave\Isolator;' . PHP_EOL;
+        $expectedCode .= PHP_EOL;
+        $expectedCode .= 'class TestIsolatorClass extends Isolator' . PHP_EOL;
+        $expectedCode .= '{' . PHP_EOL;
+        $expectedCode .= '/* method goes here */' . PHP_EOL;
+        $expectedCode .= '}' . PHP_EOL;
 
-            Phake::inOrder(
-                Phake::verify($this->generator)->requiresIsolatorProxy($reflector),
-                Phake::verify($this->generator)->generateProxyMethod($reflector),
-                Phake::verify($this->isolator)->eval($expectedCode)
-            );
-            throw $e;
-        }
+        $code = $this->generator->generateClass(
+            'TestIsolatorClass',
+            ['ereg']
+        );
+
+        $this->assertEquals(
+            $expectedCode,
+            $code
+        );
     }
 
     public function testInspect()

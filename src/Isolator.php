@@ -2,7 +2,6 @@
 namespace Icecave\Isolator;
 
 use ReflectionClass;
-use ReflectionFunction;
 
 /**
  * Isolate calls to global PHP functions.
@@ -94,9 +93,8 @@ class Isolator
      *
      * @param boolean        $handleReferences Indicates whether or not the isolator should account for functions with reference parameters and return types.
      * @param Generator|null $generator        The Generator instance to use to construct the concreate isolator class, or null to use the default.
-     * @param Isolator|null  $isolator         The isolator used to access the global list of functions, or null to use the default.
      */
-    public static function getIsolator($handleReferences = true, Generator $generator = null, Isolator $isolator = null)
+    public static function getIsolator($handleReferences = true, Generator $generator = null)
     {
         // Global instance already initialized ...
         if (self::$instance !== null) {
@@ -113,23 +111,10 @@ class Isolator
             $generator = new Generator();
         }
 
-        // Get a basic isolator to use for reflection ...
-        if ($isolator === null) {
-            $isolator = new self();
-        }
-
-        // Create reflectors for each of the globally defined functions ...
-        $functionReflectors = array();
-        foreach ($isolator->get_defined_functions() as $functions) {
-            foreach ($functions as $name) {
-                $functionReflectors[] = new ReflectionFunction($name);
-            }
-        }
-
         // Generate the concrete isolator class and install it as the global instance ...
-        $classReflector = $generator->generateClass($functionReflectors);
-
-        return self::$instance = $classReflector->newInstance();
+        return self::$instance = $generator
+            ->generate()
+            ->newInstance();
     }
 
     /**

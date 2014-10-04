@@ -6,38 +6,55 @@ use ReflectionFunction;
 
 /**
  * Generates an isolator that can accommodate calls to functions with reference parameters.
+ *
+ * @internal
  */
 class Generator
 {
-    public function __construct($ellipsisExpansion = 10, Isolator $isolator = null)
+    public function __construct($ellipsisExpansion = 10)
     {
         $this->ellipsisExpansion = $ellipsisExpansion;
-        $this->isolator = $isolator ?: new Isolator(); // Note, Isolator::getIsolator is not used to avoid recursion.
     }
 
-    public function generateClass(array $functionReflectors, $className = null, $baseClassName = 'Isolator')
+    public function generate($useCache = true)
     {
-        if ($className === null) {
-            $className = 'Isolator' . self::$count++;
-        }
+        $hash = hash_init('md5');
+        hash_update($hash, phpversion());
+        hash_update($hash, __FILE__);
 
-        $code    = 'namespace ' . __NAMESPACE__ . ' {' . PHP_EOL;
-        $code .= 'class ' . $className . ' extends ' . $baseClassName . ' {' . PHP_EOL;
-        $code .= PHP_EOL;
+        $allFunctions = array();
 
-        foreach ($functionReflectors as $reflector) {
-            if ($this->requiresIsolatorProxy($reflector)) {
-                $code .= $this->generateProxyMethod($reflector);
-                $code .= PHP_EOL;
+        foreach (get_defined_functions() as $type => $functions) {
+            hash_update($hash, $type);
+
+            foreach ($functions as $function) {
+                hash_update($hash, $function);
+                $allFunctions[] = $function;
             }
         }
 
-        $code .= '} // End class.' . PHP_EOL;
-        $code .= '} // End namespace.' . PHP_EOL;
+        $className     = 'Isolator_' . hash_final($hash);
+        $qualifiedName = __NAMESPACE__ . '\\' . $className;
 
-        $this->isolator->eval($code);
+        if (class_exists($qualifiedName, false)) {
+            return new ReflectionClass($qualifiedName);
+        }
 
-        return new ReflectionClass(__NAMESPACE__ . '\\' . $className);
+        $directory = sys_get_temp_dir();
+        $fileName  = $directory . DIRECTORY_SEPARATOR . $className . '.php';
+
+        if ($useCache) {
+            @include $fileName;
+            $useCache = class_exists($qualifiedName, false);
+        }
+
+        if (!$useCache) {
+            $code = $this->generateClass($className, $allFunctions);
+            file_put_contents($fileName, $code);
+            include $fileName;
+        }
+
+        return new ReflectionClass($qualifiedName);
     }
 
     public function requiresIsolatorProxy(ReflectionFunction $reflector)
@@ -55,6 +72,24 @@ class Generator
         }
 
         return false;
+    }
+
+    public function generateClass($className, array $functions)
+    {
+        $code  = '<?php' . PHP_EOL;
+        $code .= 'namespace ' . __NAMESPACE__ . ';' . PHP_EOL;
+        $code .= PHP_EOL;
+        $code .= 'class ' . $className . ' extends Isolator' . PHP_EOL;
+        $code .= '{' . PHP_EOL;
+        foreach ($functions as $function) {
+            $reflector = new ReflectionFunction($function);
+            if ($this->requiresIsolatorProxy($reflector)) {
+                $code .= $this->generateProxyMethod($reflector);
+            }
+        }
+        $code .= '}' . PHP_EOL;
+
+        return $code;
     }
 
     public function inspect(ReflectionFunction $reflector)
@@ -82,28 +117,44 @@ class Generator
         return array($minArity, $maxArity, $refIndices);
     }
 
-    public function generateProxyMethod(ReflectionFunction $reflector)
+    protected function generateProxyMethod(ReflectionFunction $reflector)
     {
-        list($minArity, $maxArity, $refIndices) = $this->inspect($reflector);
         $name = $reflector->getName();
-        $code    = $this->generateSignature($name, $reflector->returnsReference(), $minArity, $maxArity, $refIndices) . ' {' . PHP_EOL;
+
+        list($minArity, $maxArity, $refIndices) = $this->inspect($reflector);
+
+        $signature = $this->generateSignature(
+            $name,
+            $reflector->returnsReference(),
+            $minArity,
+            $maxArity,
+            $refIndices
+        );
+
+        $code  = $signature . PHP_EOL;
+        $code .= '{' . PHP_EOL;
         $code .= $this->generateSwitch($name, $minArity, $maxArity);
         $code .= $this->generateReturn($name, $maxArity);
-        $code .= '} // End function ' . $name . '.' . PHP_EOL;
+        $code .= '}' . PHP_EOL;
         $code .= PHP_EOL;
 
         return $code;
     }
 
-    protected function generateSignature($name, $returnsReference, $minArity, $maxArity, $refIndices)
-    {
+    protected function generateSignature(
+        $name,
+        $returnsReference,
+        $minArity,
+        $maxArity,
+        $refIndices
+    ) {
         $parameters = array();
         for ($index = 0; $index < $maxArity; ++$index) {
             $param = '';
             if ($refIndices[$index]) {
                 $param .= '&';
             }
-            $param .= '$_' . $index;
+            $param .= '$p' . $index;
             if ($index >= $minArity) {
                 $param .= ' = null';
             }
@@ -124,7 +175,7 @@ class Generator
             return '';
         }
 
-        $code    = 'switch (func_num_args()) {' . PHP_EOL;
+        $code = 'switch (func_num_args()) {' . PHP_EOL;
 
         for ($arity = $minArity; $arity < $maxArity; ++$arity) {
             $code .= sprintf(
@@ -134,7 +185,7 @@ class Generator
             );
         }
 
-        $code .= '} // End switch.' . PHP_EOL;
+        $code .= '}' . PHP_EOL;
 
         return $code;
     }
@@ -143,7 +194,7 @@ class Generator
     {
         $arguments = array();
         for ($index = 0; $index < $arity; ++$index) {
-            $arguments[] = '$_' . $index;
+            $arguments[] = '$p' . $index;
         }
 
         return sprintf(
@@ -153,7 +204,5 @@ class Generator
         );
     }
 
-    private static $count = 0;
-    protected $ellipsisExpansionDepth;
-    protected $isolator;
+    protected $ellipsisExpansion;
 }
