@@ -70,7 +70,7 @@ class CodeGenerator
         $code  = '    ' . $signature . PHP_EOL;
         $code .= '    {' . PHP_EOL;
         $code .= $this->generateSwitch($name, $minArity, $maxArity);
-        $code .= '        return call_user_func_array(' . var_export($reflector->getName(), true) . ', func_get_args());' . PHP_EOL;
+        $code .= '        return \call_user_func_array(' . var_export($reflector->getName(), true) . ', \func_get_args());' . PHP_EOL;
         $code .= '    }' . PHP_EOL;
 
         return $code;
@@ -109,11 +109,7 @@ class CodeGenerator
 
     private function generateSwitch($name, $minArity, $maxArity)
     {
-        // if ($minArity === $maxArity) {
-        //     return '';
-        // }
-
-        $code = '        switch (func_num_args()) {' . PHP_EOL;
+        $code = '        switch (\func_num_args()) {' . PHP_EOL;
 
         for ($arity = $minArity; $arity <= $maxArity; ++$arity) {
             $code .= sprintf(

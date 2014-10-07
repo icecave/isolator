@@ -35,31 +35,39 @@ abstract class AbstractIsolator implements IsolatorInterface
             case 'exit':
             case 'die':
                 // @codeCoverageIgnoreStart
-                exit(current($arguments));
+                exit($arguments[0]);
                 // @codeCoverageIgnoreEnd
             case 'echo':
-                echo current($arguments);
+                echo $arguments[0];
 
                 return;
             case 'eval':
-                return eval(current($arguments));
+                return eval($arguments[0]);
             case 'include':
-                return include current($arguments);
+                return include $arguments[0];
             case 'include_once':
-                return include_once current($arguments);
+                return include_once $arguments[0];
             case 'require':
-                return require current($arguments);
+                return require $arguments[0];
             case 'require_once':
-                return require_once current($arguments);
+                return require_once $arguments[0];
             case 'new':
+                if (1 === \count($arguments)) {
+                    return new $arguments[0]();
+                }
+
                 $reflector = new ReflectionClass(
-                    array_shift($arguments)
+                    \array_shift($arguments)
                 );
 
                 return $reflector->newInstanceArgs($arguments);
         }
 
-        return call_user_func_array($name, $arguments);
+        if ($arguments) {
+            return \call_user_func_array($name, $arguments);
+        }
+
+        return $name();
     }
 
     /**

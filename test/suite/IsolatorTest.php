@@ -66,8 +66,12 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
 
         require __DIR__ . '/../src/function.php';
 
+        $this->assertNull(
+            $this->isolator->icecaveIsolatorPostGeneration()
+        );
+
         $this->assertSame(
-            $this->isolator->icecaveIsolatorPostGeneration(),
+            $this->isolator->icecaveIsolatorPostGeneration(123),
             123
         );
     }
