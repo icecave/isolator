@@ -38,7 +38,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
 
         $code = $this->generator->generateClass(
             'TestIsolatorClass',
-            ['ereg']
+            array('ereg')
         );
 
         $this->assertEquals(
