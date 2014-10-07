@@ -7,21 +7,25 @@ namespace Icecave\Isolator;
 trait IsolatorTrait
 {
     /**
-     * Get the {@see Isolator} instance used by this object.
+     * Get the {@see IsolatorInterface} instance used by this object.
      *
-     * @return Isolator The isolator set via {@see IsolatorTrait::setIsolator()}, or the default isolator if none has been set.
+     * @return IsolatorInterface The isolator set via {@see IsolatorTrait::setIsolator()}, or the default isolator if none has been set.
      */
     public function isolator()
     {
-        return Isolator::get($this->isolator);
+        if ($this->isolator) {
+            return $this->isolator;
+        }
+
+        return Isolator::get();
     }
 
     /**
-     * Set the {@see Isolator} instance to be used by this object.
+     * Set the {@see IsolatorInterface} instance to be used by this object.
      *
-     * @param Isolator|null $isolator The isolator instance to be used by this object, or null to use the global instance.
+     * @param IsolatorInterface|null $isolator The isolator instance to be used by this object, or null to use the global instance.
      */
-    public function setIsolator(Isolator $isolator = null)
+    public function setIsolator(IsolatorInterface $isolator = null)
     {
         $this->isolator = $isolator;
     }
