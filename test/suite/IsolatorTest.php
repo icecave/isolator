@@ -2,174 +2,197 @@
 namespace Icecave\Isolator;
 
 use DateTime;
-use Phake;
 use PHPUnit_Framework_TestCase;
-use ReflectionClass;
-use ReflectionFunction;
 use SplObjectStorage;
 
+/**
+ * @covers Icecave\Isolator\Isolator
+ * @covers Icecave\Isolator\Detail\AbstractIsolator
+ */
 class IsolatorTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        $this->isolator = new Isolator();
+    }
+
     public function tearDown()
     {
-        parent::tearDown();
-        Isolator::resetIsolator();
+        Isolator::set(null);
     }
 
     public function testCall()
     {
-        $isolator = new Isolator();
-        $this->assertSame(3, $isolator->strlen('foo'));
+        $this->assertSame(
+            3,
+            $this->isolator->strlen('foo')
+        );
+    }
+
+    public function testCallWithReference()
+    {
+        $matches = array();
+
+        $this->isolator->preg_match(
+            '/.*/',
+            'foo',
+            $matches
+        );
+
+        $this->assertSame(
+            array('foo'),
+            $matches
+        );
+    }
+
+    public function testCallWithVarArgs()
+    {
+        $this->assertSame(
+            'a b c',
+            $this->isolator->sprintf(
+                '%s %s %s',
+                'a',
+                'b',
+                'c'
+            )
+        );
+    }
+
+    public function testCallFunctionDefinedAfterIsolatorCreated()
+    {
+        if (function_exists('icecaveIsolatorPostGeneration')) {
+            $this->markTestSkipped('This test can only be executed once.');
+        }
+
+        require __DIR__ . '/../src/function.php';
+
+        $this->assertNull(
+            $this->isolator->icecaveIsolatorPostGeneration()
+        );
+
+        $this->assertSame(
+            $this->isolator->icecaveIsolatorPostGeneration(123),
+            123
+        );
     }
 
     public function testEcho()
     {
-        $isolator = new Isolator();
         $this->expectOutputString('Echo works!');
-        $isolator->echo('Echo works!');
+
+        $this->isolator->echo('Echo works!');
     }
 
     public function testEval()
     {
-        $isolator = new Isolator();
-        $this->assertSame(3, $isolator->eval('return strlen("foo");'));
+        $this->assertSame(
+            3,
+            $this->isolator->eval('return strlen("foo");')
+        );
     }
 
     public function testInclude()
     {
-        $isolator = new Isolator();
-        $this->assertFalse(class_exists('Icecave\Isolator\ClassA', false));
+        $this->assertFalse(
+            class_exists('Icecave\Isolator\ClassA', false)
+        );
 
         $this->assertSame(
             'returnValueA',
-            $isolator->include(__DIR__ . '/../src/ClassA.php')
+            $this->isolator->include(__DIR__ . '/../src/ClassA.php')
         );
-        $this->assertTrue(class_exists('Icecave\Isolator\ClassA', false));
+
+        $this->assertTrue(
+            class_exists('Icecave\Isolator\ClassA', false)
+        );
     }
 
     public function testIncludeOnce()
     {
-        $isolator = new Isolator();
-        $this->assertFalse(class_exists('Icecave\Isolator\ClassB', false));
+        $this->assertFalse(
+            class_exists('Icecave\Isolator\ClassB', false)
+        );
 
         $this->assertSame(
             'returnValueB',
-            $isolator->include_once(__DIR__ . '/../src/ClassB.php')
+            $this->isolator->include_once(__DIR__ . '/../src/ClassB.php')
         );
-        $this->assertTrue(class_exists('Icecave\Isolator\ClassB', false));
+
+        $this->assertTrue(
+            class_exists('Icecave\Isolator\ClassB', false)
+        );
     }
 
     public function testRequire()
     {
-        $isolator = new Isolator();
-        $this->assertFalse(class_exists('Icecave\Isolator\ClassC', false));
+        $this->assertFalse(
+            class_exists('Icecave\Isolator\ClassC', false)
+        );
 
         $this->assertSame(
             'returnValueC',
-            $isolator->require(__DIR__ . '/../src/ClassC.php')
+            $this->isolator->require(__DIR__ . '/../src/ClassC.php')
         );
-        $this->assertTrue(class_exists('Icecave\Isolator\ClassC', false));
+
+        $this->assertTrue(
+            class_exists('Icecave\Isolator\ClassC', false)
+        );
     }
 
     public function testRequireOnce()
     {
-        $isolator = new Isolator();
-        $this->assertFalse(class_exists('Icecave\Isolator\ClassD', false));
+        $this->assertFalse(
+            class_exists('Icecave\Isolator\ClassD', false)
+        );
 
         $this->assertSame(
             'returnValueD',
-            $isolator->require_once(__DIR__ . '/../src/ClassD.php')
+            $this->isolator->require_once(__DIR__ . '/../src/ClassD.php')
         );
-        $this->assertTrue(class_exists('Icecave\Isolator\ClassD', false));
+
+        $this->assertTrue(
+            class_exists('Icecave\Isolator\ClassD', false)
+        );
     }
 
     public function testNew()
     {
-        $isolator = new Isolator();
-
         $this->assertEquals(
             new SplObjectStorage(),
-            $isolator->new('SplObjectStorage')
+            $this->isolator->new('SplObjectStorage')
         );
     }
 
     public function testNewWithConstructorArguments()
     {
-        $isolator = new Isolator();
-
         $this->assertEquals(
             new DateTime('2014-01-01 01:02:03 GMT'),
-            $isolator->new('DateTime', '2014-01-01 01:02:03 GMT')
+            $this->isolator->new('DateTime', '2014-01-01 01:02:03 GMT')
         );
     }
 
     public function testGet()
     {
-        $isolator = new Isolator();
-        $this->assertSame($isolator, Isolator::get($isolator));
-        $this->assertInstanceOf('Icecave\Isolator\Isolator', Isolator::get(null));
-    }
-
-    public function testGetIsolator()
-    {
-        $isolator = Isolator::getIsolator();
-        $this->assertInstanceOf('Icecave\Isolator\Isolator', $isolator);
-        $this->assertSame($isolator, Isolator::getIsolator());
-    }
-
-    public function testGetIsolatorNoReferences()
-    {
-        $isolator = Isolator::getIsolator(false);
-        $this->assertSame('Icecave\Isolator\Isolator', get_class($isolator));
-    }
-
-    public function testGetIsolatorExistingInstance()
-    {
-        $isolator = Isolator::getIsolator(false);
-        $this->assertInstanceOf('Icecave\Isolator\Isolator', $isolator);
-        $this->assertSame($isolator, Isolator::getIsolator(false));
-    }
-
-    public function testGetIsolatorNewInstance()
-    {
-        $generator = Phake::mock('Icecave\Isolator\Generator');
-        Phake::when($generator)
-            ->generateClass(Phake::anyParameters())
-            ->thenReturn(new ReflectionClass('Icecave\Isolator\Isolator'));
-
-        $functions = array(
-            'internal' => array(
-                'strlen'
-            )
+        $this->assertSame(
+            $this->isolator,
+            Isolator::get($this->isolator)
         );
 
-        $reflectors = array(
-            new ReflectionFunction('strlen')
+        $globalIsolator = Isolator::get();
+
+        $this->assertInstanceOf(
+            'Icecave\Isolator\Isolator',
+            $globalIsolator
         );
 
-        $internalIsolator = Phake::mock('Icecave\Isolator\Isolator');
-        Phake::when($internalIsolator)
-            ->get_defined_functions()
-            ->thenReturn($functions);
-
-        $isolator = Isolator::getIsolator(true, $generator, $internalIsolator);
-        $this->assertInstanceOf('Icecave\Isolator\Isolator', $isolator);
-
-        Phake::inOrder(
-            Phake::verify($internalIsolator)->get_defined_functions()
-            , Phake::verify($generator)->generateClass($reflectors)
+        $this->assertNotSame(
+            $this->isolator,
+            $globalIsolator
         );
 
-        // Invoking a second time should not produce any additional calls to the generator or isolator ...
-        Phake::verifyNoFurtherInteraction($generator);
-        Phake::verifyNoFurtherInteraction($internalIsolator);
-        $this->assertSame($isolator, Isolator::getIsolator(true, $generator, $isolator));
-    }
-
-    public function testClassName()
-    {
-        $isolator = Isolator::getIsolator();
-
-        $this->assertSame(get_class($isolator), Isolator::className());
+        $this->assertSame(
+            $globalIsolator,
+            Isolator::get()
+        );
     }
 }

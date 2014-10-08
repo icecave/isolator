@@ -18,7 +18,7 @@ class IsolatorTraitTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($instance, $object->isolator());
 
-        $instance = Phake::mock(__NAMESPACE__ . '\Isolator');
+        $instance = Phake::mock(__NAMESPACE__ . '\IsolatorInterface');
 
         $object->setIsolator($instance);
 
