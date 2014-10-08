@@ -48,11 +48,12 @@ directory when your test suite is set up or perhaps even use a [virtual filesyst
 **Isolator** provides a fourth alternative. Given below is the same example rewritten using an `Isolator` instance.
 
 ```php
+use Icecave\Isolator\IsolatorInterface;
 use Icecave\Isolator\Isolator;
 
 class MyDocument
 {
-    public function __construct($filename, Isolator $isolator = null)
+    public function __construct($filename, IsolatorInterface $isolator = null)
     {
         $this->filename = $filename;
         $this->isolator = Isolator::get($isolator);
@@ -68,9 +69,9 @@ class MyDocument
 }
 ```
 
-MyDocument now takes an instance of `Isolator` in it's constructor. It would be a pain - and unnecessary - to specify
-the `Isolator` instance every time you construct an object in your production code, so a shared instance is made
-accessible using the `Isolator::get()` method. If a non-null value is passed to `Isolator::get()` it is returned
+`MyDocument` now takes an instance of `IsolatorInterface` in it's constructor. It would be a pain - and unnecessary - to
+create a new `Isolator` instance every time you construct an object in your production code, so a shared instance is
+made accessible using the `Isolator::get()` method. If a non-null value is passed to `Isolator::get()` it is returned
 unchanged, allowing you to replace the isolator when necessary.
 
 `MyDocument::getContents()` is also updated to use the isolator instance rather than calling the global function
@@ -81,16 +82,14 @@ test suite below.
 for mocking. Phake provides a more flexible alternative to PHPUnit's built-in mock objects.*
 
 ```php
-use Icecave\Isolator\Isolator;
-
 class MyDocumentTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
         // First a mocked isolator instance is created ...
-        $this->isolator = Phake::mock(Isolator::className());
+        $this->isolator = Phake::mock('Icecave\Isolator\IsolatorInterface');
 
-        // That isolator instance is provided to the MyDocument instance
+        // That isolator instance is given to the MyDocument instance
         // that is to be tested ...
         $this->myDocument = new MyDocument('foo.txt', $this->isolator);
     }
@@ -118,9 +117,9 @@ class MyDocumentTest extends PHPUnit_Framework_TestCase
 
 The test verifies the behavior of the `MyDocument` class completely, without requiring any disk access.
 
-Using an isolator is most helpful when testing code that uses global functions which maintain global state or utilize
-external resources such as databases, filesystems, etc. It is usually unnecessary to mock out deterministic functions
-such as `strlen()`, for example.
+Using an isolator is most helpful when testing code that uses functions which maintain global state or utilize external
+resources such as databases, filesystems, etc. It is usually unnecessary to mock out deterministic functions such as
+`strlen()`, for example.
 
 ## Isolator Trait
 
@@ -163,7 +162,8 @@ class MyDocument
 
 Several of PHP's core global functions have some peculiarities and inconsitencies in the way they are defined.
 **Isolator** attempts to accomodate such inconsistencies when possible, but may have issues with some native C functions
-for which parameter reflection information is non-standard or incorrect.
+for which parameter reflection information is non-standard or incorrect. These issues seem to be largely rectified as of
+PHP 5.6.
 
 ## Contact us
 
