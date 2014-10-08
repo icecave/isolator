@@ -144,7 +144,6 @@ class MyDocument
     }
 
     protected $filename;
-    protected $isolator;
 }
 ```
 
