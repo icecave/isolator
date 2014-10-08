@@ -1,9 +1,7 @@
 <?php
 namespace Icecave\Isolator\Detail;
 
-use Phake;
 use PHPUnit_Framework_TestCase;
-use ReflectionFunction;
 
 class CodeGeneratorTest extends PHPUnit_Framework_TestCase
 {
