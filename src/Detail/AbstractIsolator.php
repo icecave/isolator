@@ -2,13 +2,12 @@
 namespace Icecave\Isolator\Detail;
 
 use Icecave\Isolator\Isolator;
-use Icecave\Isolator\IsolatorInterface;
 use ReflectionClass;
 
 /**
  * @internal
  */
-abstract class AbstractIsolator implements IsolatorInterface
+abstract class AbstractIsolator
 {
     /**
      * Forward a call onto global function.
@@ -75,11 +74,11 @@ abstract class AbstractIsolator implements IsolatorInterface
      *
      * This convenience method returns the global isolator instance, or $instance if provided.
      *
-     * @param IsolatorInterface|null $isolator An existing isolator instance, if available.
+     * @param Isolator|null $isolator An existing isolator instance, if available.
      *
-     * @return IsolatorInterface The global isolator instance, or $isolator if provided.
+     * @return Isolator The global isolator instance, or $isolator if provided.
      */
-    public static function get(IsolatorInterface $isolator = null)
+    public static function get(Isolator $isolator = null)
     {
         if (null !== $isolator) {
             return $isolator;
@@ -93,9 +92,9 @@ abstract class AbstractIsolator implements IsolatorInterface
     /**
      * Set the default isolator instance.
      *
-     * @param IsolatorInterface $isolator The isolator instance.
+     * @param Isolator $isolator The isolator instance.
      */
-    public static function set(IsolatorInterface $isolator = null)
+    public static function set(Isolator $isolator = null)
     {
         self::$instance = $isolator;
     }

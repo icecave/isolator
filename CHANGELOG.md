@@ -5,7 +5,6 @@
 * **[BC]** Removed `Isolator::getIsolator()` and `resetIsolator()`
 * **[BC]** Removed `Isolator::className()` (the full class name is now always `Icecave\Isolator\Isolator`)
 * **[FIXED]** Calling functions with variable arguments now works correctly in PHP 5.6
-* **[NEW]** Added `IsolatorInterface`
 * **[NEW]** Added `Isolator::set()`
 * **[IMPROVED]** Code is now generated via a custom autoloader, and then cached, providing a massive performance improvement
 * **[IMRPOVED]** Several micro-optimisations to invocation of function-like language constructs
