@@ -1,5 +1,18 @@
 # Isolator Changelog
 
+### 3.0.0 (2014-10-08)
+
+* **[BC]** Removed `Isolator::getIsolator()` and `resetIsolator()`
+* **[BC]** Removed `Isolator::className()` (the full class name is now always `Icecave\Isolator\Isolator`)
+* **[FIXED]** Calling functions with variable arguments now works correctly in PHP 5.6
+* **[NEW]** Added `IsolatorInterface`
+* **[NEW]** Added `Isolator::set()`
+* **[IMPROVED]** Code is now generated via a custom autoloader, and then cached, providing a massive performance improvement
+* **[IMRPOVED]** Several micro-optimisations to invocation of function-like language constructs
+
+While this release contains several backwards compatibility breaks, the `Isolator` class itself still behaves as per the
+examples given in the README file of v2.3.0.
+
 ### 2.3.0 (2014-08-12)
 
 * **[NEW]** Added support for isolation of the `new` operator
@@ -16,7 +29,7 @@
 
 ### 2.1.2 (2013-04-04)
 
-* **[FIX]** Return values of isolated `include/require[_once]` calls are now propagated correctly
+* **[FIXED]** Return values of isolated `include/require[_once]` calls are now propagated correctly
 * **[NEW]** Integrated `icecave/archer` (previously `icecave/testing`)
 
 ### 2.1.1 (2013-01-13)

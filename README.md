@@ -173,4 +173,4 @@ PHP 5.6.
 <!-- references -->
 [Build Status]: http://img.shields.io/travis/IcecaveStudios/isolator/develop.svg?style=flat-square
 [Test Coverage]: http://img.shields.io/coveralls/IcecaveStudios/isolator/develop.svg?style=flat-square
-[SemVer]: http://img.shields.io/:semver-2.3.0-brightgreen.svg?style=flat-square
+[SemVer]: http://img.shields.io/:semver-3.0.0-brightgreen.svg?style=flat-square

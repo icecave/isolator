@@ -4,5 +4,5 @@ namespace Icecave\Isolator;
 class PackageInfo
 {
     const NAME = 'Isolator';
-    const VERSION = '2.3.0';
+    const VERSION = '3.0.0';
 }
