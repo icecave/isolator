@@ -13,7 +13,11 @@ trait IsolatorTrait
      */
     public function isolator()
     {
-        return Isolator::get($this->isolator);
+        if ($this->isolator) {
+            return $this->isolator;
+        }
+
+        return Isolator::get();
     }
 
     /**

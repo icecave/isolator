@@ -68,8 +68,8 @@ class MyDocument
 }
 ```
 
-MyDocument now takes an instance of `Isolator` in it's constructor. It would be a pain - and unnecessary - to specify
-the `Isolator` instance every time you construct an object in your production code, so a shared instance is made
+`MyDocument` now takes an instance of `Isolator` in it's constructor. It would be a pain - and unnecessary - to create a
+new `Isolator` instance every time you construct an object in your production code, so a shared instance is made
 accessible using the `Isolator::get()` method. If a non-null value is passed to `Isolator::get()` it is returned
 unchanged, allowing you to replace the isolator when necessary.
 
@@ -81,16 +81,14 @@ test suite below.
 for mocking. Phake provides a more flexible alternative to PHPUnit's built-in mock objects.*
 
 ```php
-use Icecave\Isolator\Isolator;
-
 class MyDocumentTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
         // First a mocked isolator instance is created ...
-        $this->isolator = Phake::mock(Isolator::className());
+        $this->isolator = Phake::mock('Icecave\Isolator\Isolator');
 
-        // That isolator instance is provided to the MyDocument instance
+        // That isolator instance is given to the MyDocument instance
         // that is to be tested ...
         $this->myDocument = new MyDocument('foo.txt', $this->isolator);
     }
@@ -118,9 +116,9 @@ class MyDocumentTest extends PHPUnit_Framework_TestCase
 
 The test verifies the behavior of the `MyDocument` class completely, without requiring any disk access.
 
-Using an isolator is most helpful when testing code that uses global functions which maintain global state or utilize
-external resources such as databases, filesystems, etc. It is usually unnecessary to mock out deterministic functions
-such as `strlen()`, for example.
+Using an isolator is most helpful when testing code that uses functions which maintain global state or utilize external
+resources such as databases, filesystems, etc. It is usually unnecessary to mock out deterministic functions such as
+`strlen()`, for example.
 
 ## Isolator Trait
 
@@ -145,7 +143,6 @@ class MyDocument
     }
 
     protected $filename;
-    protected $isolator;
 }
 ```
 
@@ -163,9 +160,15 @@ class MyDocument
 
 Several of PHP's core global functions have some peculiarities and inconsitencies in the way they are defined.
 **Isolator** attempts to accomodate such inconsistencies when possible, but may have issues with some native C functions
-for which parameter reflection information is non-standard or incorrect.
+for which parameter reflection information is non-standard or incorrect. These issues seem to be largely rectified as of
+PHP 5.6.
+
+## Contact us
+
+* Follow [@IcecaveStudios](https://twitter.com/IcecaveStudios) on Twitter
+* Visit the [Icecave Studios website](http://icecave.com.au)
 
 <!-- references -->
-[Build Status]: http://img.shields.io/travis/IcecaveStudios/isolator/develop.svg
-[Test Coverage]: http://img.shields.io/coveralls/IcecaveStudios/isolator/develop.svg
-[SemVer]: http://img.shields.io/:semver-2.3.0-brightgreen.svg
+[Build Status]: http://img.shields.io/travis/IcecaveStudios/isolator/develop.svg?style=flat-square
+[Test Coverage]: http://img.shields.io/coveralls/IcecaveStudios/isolator/develop.svg?style=flat-square
+[SemVer]: http://img.shields.io/:semver-3.0.0-brightgreen.svg?style=flat-square

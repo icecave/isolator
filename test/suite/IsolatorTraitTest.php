@@ -12,7 +12,7 @@ class IsolatorTraitTest extends PHPUnit_Framework_TestCase
 {
     public function testIsolator()
     {
-        $object = new TraitUsage;
+        $object = new TraitUsage();
 
         $instance = Isolator::get();
 
