@@ -1,5 +1,9 @@
 # Isolator Changelog
 
+### 3.0.1 (2014-10-21)
+
+* **[FIXED]** References are now preserved when calling functions with variable arguments
+
 ### 3.0.0 (2014-10-08)
 
 * **[BC]** Removed `Isolator::getIsolator()` and `resetIsolator()`
