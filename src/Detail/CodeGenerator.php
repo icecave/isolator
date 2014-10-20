@@ -42,7 +42,14 @@ class CodeGenerator
         $code .= 'class ' . $shortName . ' extends AbstractIsolator' . PHP_EOL;
         $code .= '{' . PHP_EOL;
 
+        $newLine = false;
         foreach ($functions as $function) {
+            if ($newLine) {
+                $code .= PHP_EOL;
+            } else {
+                $newLine = true;
+            }
+
             $code .= $this->generateMethod(
                 new ReflectionFunction($function)
             );
@@ -70,12 +77,20 @@ class CodeGenerator
         $code  = '    ' . $signature . PHP_EOL;
         $code .= '    {' . PHP_EOL;
         $code .= $this->generateSwitch($name, $minArity, $maxArity);
-        $code .= '        return \call_user_func_array(' . var_export($reflector->getName(), true) . ', \func_get_args());' . PHP_EOL;
+        $code .= PHP_EOL;
+        $code .= $this->generateFallbackReturn($name, $refIndices);
         $code .= '    }' . PHP_EOL;
 
         return $code;
     }
 
+    /**
+     * @param string         $name             The function name.
+     * @param boolean        $returnsReference True if the function returns a reference.
+     * @param integer        $minArity         The minimum number of arguments.
+     * @param integer        $maxArity         The maximum number of arguments present in the signature.
+     * @param array<integer> $refIndices       An array containing the indices of parameters that are references.
+     */
     private function generateSignature(
         $name,
         $returnsReference,
@@ -136,6 +151,22 @@ class CodeGenerator
             $name,
             implode(', ', $arguments)
         );
+    }
+
+    public function generateFallbackReturn($name, $refIndices)
+    {
+        $code = '        $arguments = \func_get_args();' . PHP_EOL;
+
+        foreach ($refIndices as $index => $isReference) {
+            if ($isReference) {
+                $code .= '        $arguments[' . $index . '] = &$p' . $index . ';' . PHP_EOL;
+            }
+        }
+
+        $code .= PHP_EOL;
+        $code .= '        return \call_user_func_array(' . var_export($name, true) . ', $arguments);' . PHP_EOL;
+
+        return $code;
     }
 
     private function inspectParameters(ReflectionFunction $reflector)

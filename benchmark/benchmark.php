@@ -6,6 +6,9 @@ define('ITERATIONS', 20000);
 
 $isolator = Icecave\Isolator\Isolator::get();
 
+$reflector = new ReflectionClass($isolator);
+echo $reflector->getFilename() . PHP_EOL;
+
 class TestClass
 {
     public function __construct($param = null)

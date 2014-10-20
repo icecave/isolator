@@ -195,4 +195,20 @@ class IsolatorTest extends PHPUnit_Framework_TestCase
             Isolator::get()
         );
     }
+
+    /**
+     * @group regression
+     * @link https://github.com/IcecaveStudios/isolator/issues/17
+     */
+    public function testCallVarArgsWithReferences()
+    {
+        $array = array();
+
+        $this->isolator->array_push($array, 1, 2);
+
+        $this->assertSame(
+            array(1, 2),
+            $array
+        );
+    }
 }
