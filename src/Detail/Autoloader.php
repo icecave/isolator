@@ -1,6 +1,7 @@
 <?php
 namespace Icecave\Isolator\Detail;
 
+use Exception;
 use Icecave\Isolator\PackageInfo;
 
 /**
@@ -86,19 +87,28 @@ class Autoloader
         array $functions
     ) {
         $dirName = dirname($fileName);
+        $umask   = umask(0);
 
-        if (!file_exists($dirName)) {
-            mkdir($dirName, 0777, true);
+        try {
+            if (!file_exists($dirName)) {
+                mkdir($dirName, 0777, true);
+            }
+
+            $code = $this
+                ->codeGenerator
+                ->generate(
+                    $className,
+                    $functions
+                );
+
+            file_put_contents($fileName, $code);
+
+            umask($umask);
+        } catch (Exception $e) {
+            umask($umask);
+
+            throw $e;
         }
-
-        $code = $this
-            ->codeGenerator
-            ->generate(
-                $className,
-                $functions
-            );
-
-        file_put_contents($fileName, $code);
     }
 
     private $path;

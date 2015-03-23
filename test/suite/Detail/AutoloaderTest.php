@@ -1,6 +1,7 @@
 <?php
 namespace Icecave\Isolator\Detail;
 
+use Exception;
 use Phake;
 use PHPUnit_Framework_TestCase;
 
@@ -42,4 +43,56 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
         Phake::verify($this->codeGenerator, Phake::times(1))->generate(Phake::anyParameters());
     }
 
+    public function testDirectoryIsCreatedWorldWritable()
+    {
+        $this->expectOutputString('Included!');
+
+        $this->autoloader->load('Foo');
+
+        $this->assertEquals(
+            0777,
+            stat($this->path)['mode'] & 0777,
+            'Isolator temporary directory must be world writable.'
+        );
+    }
+
+    public function testUmaskIsReset()
+    {
+        $umask = umask();
+
+        $this->expectOutputString('Included!');
+
+        $this->autoloader->load('Foo');
+
+        $this->assertEquals(
+            $umask,
+            umask()
+        );
+    }
+
+    public function testUmaskIsResetAfterException()
+    {
+        $umask     = umask();
+        $exception = new Exception('The exception!');
+
+        Phake::when($this->codeGenerator)
+            ->generate(Phake::anyParameters())
+            ->thenThrow($exception);
+
+        $this->setExpectedException(
+            Exception::class,
+            'The exception!'
+        );
+
+        try {
+            $this->autoloader->load('Foo');
+        } catch (Exception $e) {
+            $this->assertEquals(
+                $umask,
+                umask()
+            );
+
+            throw $e;
+        }
+    }
 }
