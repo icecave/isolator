@@ -49,9 +49,11 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
 
         $this->autoloader->load('Foo');
 
+        $stat = stat($this->path);
+
         $this->assertEquals(
             0777,
-            stat($this->path)['mode'] & 0777,
+            $stat['mode'] & 0777,
             'Isolator temporary directory must be world writable.'
         );
     }
@@ -80,7 +82,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
             ->thenThrow($exception);
 
         $this->setExpectedException(
-            Exception::class,
+            'Exception',
             'The exception!'
         );
 
