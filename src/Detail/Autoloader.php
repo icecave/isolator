@@ -16,7 +16,7 @@ class Autoloader
      */
     public function __construct($path, CodeGenerator $codeGenerator)
     {
-        $this->path = $path;
+        $this->path          = $path;
         $this->codeGenerator = $codeGenerator;
     }
 

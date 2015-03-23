@@ -2,14 +2,14 @@
 namespace Icecave\Isolator\Detail;
 
 use Exception;
-use Phake;
 use PHPUnit_Framework_TestCase;
+use Phake;
 
 class AutoloaderTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->path = tempnam(sys_get_temp_dir(), 'isolator-');
+        $this->path          = tempnam(sys_get_temp_dir(), 'isolator-');
         $this->codeGenerator = Phake::mock(__NAMESPACE__ . '\CodeGenerator');
 
         $this->autoloader = new Autoloader(

@@ -191,17 +191,3 @@ class CodeGeneratorTest extends PHPUnit_Framework_TestCase
         );
     }
 }
-
-
-        // $expectedCode .= PHP_EOL;
-        // $expectedCode .= 'public function phpversion($p0 = null)' . PHP_EOL;
-        // $expectedCode .= '{' . PHP_EOL;
-        // $expectedCode .= '    switch (\func_num_args()) {' . PHP_EOL;
-        // $expectedCode .= '        case 0: return \phpversion();' . PHP_EOL;
-        // $expectedCode .= '        case 1: return \phpversion($p0);' . PHP_EOL;
-        // $expectedCode .= '    }' . PHP_EOL;
-        // $expectedCode .= PHP_EOL;
-        // $expectedCode .= '    $arguments = \func_get_args();' . PHP_EOL;
-        // $expectedCode .= PHP_EOL;
-        // $expectedCode .= '    return \call_user_func_array(\'phpversion\', $arguments);' . PHP_EOL;
-        // $expectedCode .= '}' . PHP_EOL;
