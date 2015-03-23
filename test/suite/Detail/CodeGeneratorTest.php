@@ -147,4 +147,47 @@ class CodeGeneratorTest extends PHPUnit_Framework_TestCase
             $code
         );
     }
+
+    public function testGenerateMultipleMethods()
+    {
+        $code = $this->generator->generate(
+            'Foo',
+            array('strlen', 'phpversion')
+        );
+
+        $expectedCode  = '<?php' . PHP_EOL;
+        $expectedCode .= PHP_EOL;
+        $expectedCode .= 'use Icecave\Isolator\Detail\AbstractIsolator;' . PHP_EOL;
+        $expectedCode .= PHP_EOL;
+        $expectedCode .= 'class Foo extends AbstractIsolator' . PHP_EOL;
+        $expectedCode .= '{' . PHP_EOL;
+        $expectedCode .= '    public function strlen($p0)' . PHP_EOL;
+        $expectedCode .= '    {' . PHP_EOL;
+        $expectedCode .= '        switch (\func_num_args()) {' . PHP_EOL;
+        $expectedCode .= '            case 1: return \strlen($p0);' . PHP_EOL;
+        $expectedCode .= '        }' . PHP_EOL;
+        $expectedCode .= PHP_EOL;
+        $expectedCode .= '        $arguments = \func_get_args();' . PHP_EOL;
+        $expectedCode .= PHP_EOL;
+        $expectedCode .= '        return \call_user_func_array(\'strlen\', $arguments);' . PHP_EOL;
+        $expectedCode .= '    }' . PHP_EOL;
+        $expectedCode .= PHP_EOL;
+        $expectedCode .= '    public function phpversion($p0 = null)' . PHP_EOL;
+        $expectedCode .= '    {' . PHP_EOL;
+        $expectedCode .= '        switch (\func_num_args()) {' . PHP_EOL;
+        $expectedCode .= '            case 0: return \phpversion();' . PHP_EOL;
+        $expectedCode .= '            case 1: return \phpversion($p0);' . PHP_EOL;
+        $expectedCode .= '        }' . PHP_EOL;
+        $expectedCode .= PHP_EOL;
+        $expectedCode .= '        $arguments = \func_get_args();' . PHP_EOL;
+        $expectedCode .= PHP_EOL;
+        $expectedCode .= '        return \call_user_func_array(\'phpversion\', $arguments);' . PHP_EOL;
+        $expectedCode .= '    }' . PHP_EOL;
+        $expectedCode .= '}' . PHP_EOL;
+
+        $this->assertSame(
+            $expectedCode,
+            $code
+        );
+    }
 }

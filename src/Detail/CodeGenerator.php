@@ -171,8 +171,8 @@ class CodeGenerator
 
     private function inspectParameters(ReflectionFunction $reflector)
     {
-        $minArity = 0;
-        $maxArity = 0;
+        $minArity   = 0;
+        $maxArity   = 0;
         $refIndices = array();
 
         foreach ($reflector->getParameters() as $parameter) {

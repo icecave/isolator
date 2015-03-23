@@ -1,9 +1,7 @@
 <?php
+// @codeCoverageIgnoreStart
 
 spl_autoload_register(
-    /**
-     * @codeCoverageIgnore
-     */
     function ($className) {
         if ($className !== 'Icecave\Isolator\Isolator') {
             return;

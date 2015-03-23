@@ -1,8 +1,8 @@
 <?php
 namespace Icecave\Isolator;
 
-use Phake;
 use PHPUnit_Framework_TestCase;
+use Phake;
 
 /**
  * @requires PHP 5.4
