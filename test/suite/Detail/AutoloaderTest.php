@@ -58,6 +58,31 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testFileIsNotCreatedWorldWritable()
+    {
+        $this->expectOutputString('Included!');
+
+        $functions = get_defined_functions();
+        $hash      = $this->autoloader->computeHash('Foo', $functions['internal']);
+        $fileName  = $this->path . '/Isolator' . $hash . '.php';
+
+        $this->autoloader->load('Foo');
+
+        $stat = stat($fileName);
+
+        $this->assertEquals(
+            0444,
+            $stat['mode'] & 0444,
+            'Isolator temporary file must be world readable.'
+        );
+
+        $this->assertEquals(
+            0,
+            $stat['mode'] & 02,
+            'Isolator temporary file not must be world writable.'
+        );
+    }
+
     public function testUmaskIsReset()
     {
         $umask = umask();

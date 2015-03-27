@@ -1,5 +1,9 @@
 # Isolator Changelog
 
+### 3.0.3 (2015-03-27)
+
+* **[FIXED]** Generated code file is now created with the correct mode
+
 ### 3.0.2 (2015-03-23)
 
 * **[FIXED]** Generated code directory is now created with the correct mode

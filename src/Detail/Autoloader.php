@@ -103,6 +103,8 @@ class Autoloader
 
             file_put_contents($fileName, $code);
 
+            chmod($fileName, 0644);
+
             umask($umask);
         } catch (Exception $e) {
             umask($umask);
