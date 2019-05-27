@@ -1,14 +1,14 @@
 <?php
 namespace Icecave\Isolator;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Phake;
 
 /**
  * @requires PHP 5.4
  * @covers Icecave\Isolator\IsolatorTrait
  */
-class IsolatorTraitTest extends PHPUnit_Framework_TestCase
+class IsolatorTraitTest extends TestCase
 {
     public function testIsolator()
     {

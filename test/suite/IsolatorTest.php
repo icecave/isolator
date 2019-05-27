@@ -2,14 +2,14 @@
 namespace Icecave\Isolator;
 
 use DateTime;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use SplObjectStorage;
 
 /**
  * @covers Icecave\Isolator\Isolator
  * @covers Icecave\Isolator\Detail\AbstractIsolator
  */
-class IsolatorTest extends PHPUnit_Framework_TestCase
+class IsolatorTest extends TestCase
 {
     public function setUp()
     {

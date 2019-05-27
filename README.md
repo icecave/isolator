@@ -81,7 +81,7 @@ test suite below.
 for mocking. Phake provides a more flexible alternative to PHPUnit's built-in mock objects.*
 
 ```php
-class MyDocumentTest extends PHPUnit_Framework_TestCase
+class MyDocumentTest extends PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

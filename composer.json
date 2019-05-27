@@ -15,15 +15,22 @@
     "authors": [
         {
             "name": "James Harris",
-            "email": "james.harris@icecave.com.au",
+            "email": "mailjamesharris@gmail.com",
             "homepage": "https://github.com/jmalloc"
+        },
+        {
+            "name": "Erin Millard",
+            "email": "ezzatron@gmail.com",
+            "homepage": "http://ezzatron.com/"
         }
     ],
     "require": {
-        "php": ">=5.3"
+        "php": "^7.1"
     },
     "require-dev": {
-        "icecave/archer": "~1"
+        "friendsofphp/php-cs-fixer": "^2",
+        "phake/phake": "^1",
+        "phpunit/phpunit": "^7"
     },
     "autoload": {
         "psr-4": {
@@ -33,9 +40,11 @@
             "src/register-autoloader.php"
         ]
     },
-    "extra": {
-        "branch-alias": {
-            "dev-develop": "3.0.x-dev"
+    "autoload-dev": { "psr-4": { "Icecave\\Isolator\\": "test/src" } },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "7.1"
         }
     }
 }

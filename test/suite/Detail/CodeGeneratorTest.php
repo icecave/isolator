@@ -1,9 +1,9 @@
 <?php
 namespace Icecave\Isolator\Detail;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class CodeGeneratorTest extends PHPUnit_Framework_TestCase
+class CodeGeneratorTest extends TestCase
 {
     public function setUp()
     {
@@ -88,7 +88,7 @@ class CodeGeneratorTest extends PHPUnit_Framework_TestCase
     {
         $code = $this->generator->generate(
             'Foo',
-            array('ereg')
+            array('preg_match')
         );
 
         $expectedCode  = '<?php' . PHP_EOL;
@@ -97,17 +97,19 @@ class CodeGeneratorTest extends PHPUnit_Framework_TestCase
         $expectedCode .= PHP_EOL;
         $expectedCode .= 'class Foo extends AbstractIsolator' . PHP_EOL;
         $expectedCode .= '{' . PHP_EOL;
-        $expectedCode .= '    public function ereg($p0, $p1, &$p2 = null)' . PHP_EOL;
+        $expectedCode .= '    public function preg_match($p0, $p1, &$p2 = null, $p3 = null, $p4 = null)' . PHP_EOL;
         $expectedCode .= '    {' . PHP_EOL;
         $expectedCode .= '        switch (\func_num_args()) {' . PHP_EOL;
-        $expectedCode .= '            case 2: return \ereg($p0, $p1);' . PHP_EOL;
-        $expectedCode .= '            case 3: return \ereg($p0, $p1, $p2);' . PHP_EOL;
+        $expectedCode .= '            case 2: return \preg_match($p0, $p1);' . PHP_EOL;
+        $expectedCode .= '            case 3: return \preg_match($p0, $p1, $p2);' . PHP_EOL;
+        $expectedCode .= '            case 4: return \preg_match($p0, $p1, $p2, $p3);' . PHP_EOL;
+        $expectedCode .= '            case 5: return \preg_match($p0, $p1, $p2, $p3, $p4);' . PHP_EOL;
         $expectedCode .= '        }' . PHP_EOL;
         $expectedCode .= PHP_EOL;
         $expectedCode .= '        $arguments = \func_get_args();' . PHP_EOL;
         $expectedCode .= '        $arguments[2] = &$p2;' . PHP_EOL;
         $expectedCode .= PHP_EOL;
-        $expectedCode .= '        return \call_user_func_array(\'ereg\', $arguments);' . PHP_EOL;
+        $expectedCode .= '        return \call_user_func_array(\'preg_match\', $arguments);' . PHP_EOL;
         $expectedCode .= '    }' . PHP_EOL;
         $expectedCode .= '}' . PHP_EOL;
 
@@ -130,9 +132,10 @@ class CodeGeneratorTest extends PHPUnit_Framework_TestCase
         $expectedCode .= PHP_EOL;
         $expectedCode .= 'class Foo extends AbstractIsolator' . PHP_EOL;
         $expectedCode .= '{' . PHP_EOL;
-        $expectedCode .= '    public function sprintf($p0, $p1)' . PHP_EOL;
+        $expectedCode .= '    public function sprintf($p0, $p1 = null)' . PHP_EOL;
         $expectedCode .= '    {' . PHP_EOL;
         $expectedCode .= '        switch (\func_num_args()) {' . PHP_EOL;
+        $expectedCode .= '            case 1: return \sprintf($p0);' . PHP_EOL;
         $expectedCode .= '            case 2: return \sprintf($p0, $p1);' . PHP_EOL;
         $expectedCode .= '        }' . PHP_EOL;
         $expectedCode .= PHP_EOL;

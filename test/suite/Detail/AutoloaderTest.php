@@ -2,10 +2,10 @@
 namespace Icecave\Isolator\Detail;
 
 use Exception;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Phake;
 
-class AutoloaderTest extends PHPUnit_Framework_TestCase
+class AutoloaderTest extends TestCase
 {
     public function setUp()
     {
@@ -106,7 +106,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
             ->generate(Phake::anyParameters())
             ->thenThrow($exception);
 
-        $this->setExpectedException(
+        $this->expectException(
             'Exception',
             'The exception!'
         );
