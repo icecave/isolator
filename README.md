@@ -1,14 +1,13 @@
 # Isolator
 
-[![Build Status]](https://travis-ci.org/IcecaveStudios/isolator)
-[![Test Coverage]](https://coveralls.io/r/IcecaveStudios/isolator?branch=develop)
-[![SemVer]](http://semver.org)
+[![Build Status](http://img.shields.io/travis/icecave/isolator/master.svg?style=flat-square)](https://travis-ci.org/icecave/isolator)
+[![Code Coverage](https://img.shields.io/codecov/c/github/icecave/isolator/master.svg?style=flat-square)](https://codecov.io/github/icecave/isolator)
+[![Latest Version](http://img.shields.io/packagist/v/recoil/recoil.svg?style=flat-square&label=semver)](https://semver.org)
 
 **Isolator** simplifies testing of classes that make use of global functions by treating all global functions as methods
 on an "isolator" object.
 
-* Install via [Composer](http://getcomposer.org) package [icecave/isolator](https://packagist.org/packages/icecave/isolator)
-* Read the [API documentation](http://icecavestudios.github.io/isolator/artifacts/documentation/api/)
+    composer require icecave/isolator
 
 ## Rationale
 
