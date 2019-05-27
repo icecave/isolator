@@ -68,9 +68,9 @@ class Autoloader
         // change between versions.
         hash_update($hash, phpversion());
 
-        // Include the Isolator version in the hash in case code generation
+        // Include the content of the code generator in case the implementation
         // changes between versions.
-        hash_update($hash, PackageInfo::VERSION);
+        hash_update_file($hash, __DIR__ . '/CodeGenerator.php');
 
         return hash_final($hash);
     }
