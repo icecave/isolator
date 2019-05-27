@@ -162,14 +162,3 @@ Several of PHP's core global functions have some peculiarities and inconsitencie
 **Isolator** attempts to accomodate such inconsistencies when possible, but may have issues with some native C functions
 for which parameter reflection information is non-standard or incorrect. These issues seem to be largely rectified as of
 PHP 5.6.
-
-## Contact us
-
-* Follow [@IcecaveStudios](https://twitter.com/IcecaveStudios) on Twitter
-* Visit the [Icecave Studios website](http://icecave.com.au)
-* Join `#icecave` on [irc.freenode.net](http://webchat.freenode.net?channels=icecave)
-
-<!-- references -->
-[Build Status]: http://img.shields.io/travis/IcecaveStudios/isolator/develop.svg?style=flat-square
-[Test Coverage]: http://img.shields.io/coveralls/IcecaveStudios/isolator/develop.svg?style=flat-square
-[SemVer]: http://img.shields.io/:semver-3.0.3-brightgreen.svg?style=flat-square
