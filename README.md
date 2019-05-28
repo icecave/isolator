@@ -2,7 +2,7 @@
 
 [![Build Status](http://img.shields.io/travis/icecave/isolator/master.svg?style=flat-square)](https://travis-ci.org/icecave/isolator)
 [![Code Coverage](https://img.shields.io/codecov/c/github/icecave/isolator/master.svg?style=flat-square)](https://codecov.io/github/icecave/isolator)
-[![Latest Version](http://img.shields.io/packagist/v/recoil/recoil.svg?style=flat-square&label=semver)](https://semver.org)
+[![Latest Version](http://img.shields.io/packagist/v/icecave/isolator.svg?style=flat-square&label=semver)](https://semver.org)
 
 **Isolator** simplifies testing of classes that make use of global functions by treating all global functions as methods
 on an "isolator" object.

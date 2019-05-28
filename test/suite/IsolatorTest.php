@@ -198,7 +198,7 @@ class IsolatorTest extends TestCase
 
     /**
      * @group regression
-     * @link https://github.com/IcecaveStudios/isolator/issues/17
+     * @link https://github.com/icecave/isolator/issues/17
      */
     public function testCallVarArgsWithReferences()
     {
